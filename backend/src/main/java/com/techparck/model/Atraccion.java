@@ -164,4 +164,11 @@ public class Atraccion {
     public void registrarIncidente(){
         incidentesOperativos++;
     }
+
+    @Override
+    public String toString() {
+        return "Atraccion{id='" + id + "', nombre='" + nombre + "', estado=" + estado + "}";
+    }
+
+    
 }
