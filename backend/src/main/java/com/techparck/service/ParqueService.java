@@ -273,4 +273,75 @@ public class ParqueService {
         return tipoAlerta; 
     }
 
+    // ────────────────────────────────────────────────────────────────
+    //  GRAFO
+    // ────────────────────────────────────────────────────────────────
+
+    public Grafo getGrafo() { return grafo; }
+
+    /** Conecta dos atracciones en el grafo con el peso dado. */
+    public void conectarAtracciones(String idA, String idB, double peso) {
+        grafo.conectar(idA, idB, peso);
+    }
+
+    // ────────────────────────────────────────────────────────────────
+    //  REPORTES
+    // ────────────────────────────────────────────────────────────────
+
+    /** Retorna las atracciones con más visitantes acumulados (top N). */
+    public List<Atraccion> topAtracciones(int n) {
+        List<Atraccion> lista = new ArrayList<>(atracciones.values());
+        lista.sort((a, b) -> Integer.compare(b.getVisitantesAcumulados(), a.getVisitantesAcumulados()));
+        return lista.subList(0, Math.min(n, lista.size()));
+    }
+
+    /** Retorna todas las atracciones en mantenimiento. */
+    public List<Atraccion> atraccionesEnMantenimiento() {
+        List<Atraccion> lista = new ArrayList<>();
+        for (Atraccion a : atracciones.values())
+            if (a.getEstado() == EstadoAtraccion.EN_MANTENIMIENTO) lista.add(a);
+        return lista;
+    }
+
+    /** Retorna todas las atracciones cerradas por clima. */
+    public List<Atraccion> atraccionesCerradasPorClima() {
+        List<Atraccion> lista = new ArrayList<>();
+        for (Atraccion a : atracciones.values())
+            if (a.getEstado() == EstadoAtraccion.CERRADA &&
+                a.getMotivoCierre() != null && a.getMotivoCierre().contains("climática"))
+                lista.add(a);
+        return lista;
+    }
+
+    /** Ingreso diario: suma de precios de tickets activos. */
+    public double calcularIngresoDiario() {
+        double total = 0;
+        for (Visitante v : visitantes.values())
+            if (v.getTicketActivo() != null) total += v.getTicketActivo().getPrecio();
+        return total;
+    }
+
+    /** Tiempo promedio de espera de todas las atracciones activas. */
+    public double tiempoPromedioEspera() {
+        double suma = 0; int count = 0;
+        for (Atraccion a : atracciones.values()) {
+            if (a.getEstado() == EstadoAtraccion.ACTIVA) { suma += a.getTiempoEsperaEstimado(); count++; }
+        }
+        return count > 0 ? suma / count : 0;
+    }
+
+    // ── Getters de estado del parque ────────────────────────────────────
+    public int getCapacidadMaximaParque(){ 
+        return capacidadMaximaParque; 
+    }
+    public void setCapacidadMaximaParque(int cap){ 
+        this.capacidadMaximaParque = cap; 
+    }
+    public int getVisitantesActualesParque(){ 
+        return visitantesActualesParque;
+
+    }
+    public ABB<String, Atraccion> getArbolAtracciones(){ 
+        return arbolAtracciones; 
+    }
 }
