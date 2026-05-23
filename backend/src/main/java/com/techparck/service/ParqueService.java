@@ -106,4 +106,85 @@ public class ParqueService {
         return zonas.remove(id) != null;
     }
 
+    // ────────────────────────────────────────────────────────────────
+    //  VISITANTES
+    // ────────────────────────────────────────────────────────────────
+
+    /** Registra un visitante y emite su ticket. */
+    public boolean registrarVisitante(Visitante v, TipoTicket tipoTicket, double precioTicket) {
+        if (visitantes.containsKey(v.getId())) return false;
+        if (visitantesActualesParque >= capacidadMaximaParque) return false; // aforo completo
+        Ticket t = new Ticket("T-" + v.getId(), tipoTicket, v.getId(), precioTicket);
+        v.setTicketActivo(t);
+        visitantes.put(v.getId(), v);
+        visitantesActualesParque++;
+        return true;
+    }
+
+    public Visitante getVisitante(String id) { return visitantes.get(id); }
+    public Collection<Visitante> getVisitantes() { return visitantes.values(); }
+
+    /** Retira un visitante del parque. */
+    public boolean retirarVisitante(String id) {
+        if (visitantes.remove(id) != null) {
+            if (visitantesActualesParque > 0) visitantesActualesParque--;
+            return true;
+        }
+        return false;
+    }
+
+    // ────────────────────────────────────────────────────────────────
+    //  OPERADORES
+    // ────────────────────────────────────────────────────────────────
+
+    public boolean agregarOperador(Operador op) {
+        if (operadores.containsKey(op.getId())) return false;
+        operadores.put(op.getId(), op);
+        return true;
+    }
+
+    public Operador getOperador(String id) { return operadores.get(id); }
+    public Collection<Operador> getOperadores() { return operadores.values(); }
+
+    /**
+     * Asigna un operador a una zona.
+     * Garantiza que no haya conflictos y que la atracción no quede sin operador.
+     */
+    public boolean asignarOperadorAZona(String operadorId, String zonaId) {
+        Operador op = operadores.get(operadorId);
+        Zona     z  = zonas.get(zonaId);
+        if (op == null || z == null) return false;
+
+        // Remover de zona anterior si existía
+        if (op.getZonaAsignadaId() != null) {
+            Zona zonaAnterior = zonas.get(op.getZonaAsignadaId());
+            if (zonaAnterior != null) zonaAnterior.removerOperador(operadorId);
+        }
+        op.asignarZona(zonaId);
+        z.asignarOperador(operadorId);
+        return true;
+    }
+
+    public boolean eliminarOperador(String id) {
+        Operador op = operadores.remove(id);
+        if (op == null) return false;
+        if (op.getZonaAsignadaId() != null) {
+            Zona z = zonas.get(op.getZonaAsignadaId());
+            if (z != null) z.removerOperador(id);
+        }
+        return true;
+    }
+
+    // ────────────────────────────────────────────────────────────────
+    //  ADMINISTRADORES
+    // ────────────────────────────────────────────────────────────────
+
+    public boolean agregarAdmin(Administrador admin) {
+        if (admins.containsKey(admin.getId())) return false;
+        admins.put(admin.getId(), admin);
+        return true;
+    }
+
+    public Administrador getAdmin(String id) { return admins.get(id); }
+
 }
