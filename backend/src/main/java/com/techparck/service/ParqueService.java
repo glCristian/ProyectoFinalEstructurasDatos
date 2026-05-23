@@ -187,4 +187,90 @@ public class ParqueService {
 
     public Administrador getAdmin(String id) { return admins.get(id); }
 
+    // ────────────────────────────────────────────────────────────────
+    //  COLA DE ATRACCIONES
+    // ────────────────────────────────────────────────────────────────
+
+    /**
+     * Ingresa a un visitante en la cola de una atracción.
+     * Valida: estado de atracción, restricciones de seguridad y saldo si aplica.
+     */
+    public String ingresarACola(String visitanteId, String atraccionId){
+        Visitante v = visitantes.get(visitanteId);
+        Atraccion a = atracciones.get(atraccionId);
+        if (v == null) return "Visitante no encontrado";
+        if (a == null) return "Atracción no encontrada";
+        if (a.getEstado() != EstadoAtraccion.ACTIVA) return "Atracción no disponible: " + a.getEstado();
+        if (!a.cumpleRestricciones(v)) return "No cumple restricciones de edad o altura";
+
+        // Si tiene costo adicional y ticket General, verificar saldo
+        if (a.getCostoAdicional() > 0 && v.getTicketActivo() != null && v.getTicketActivo().esGeneral()) {
+            if (!v.descontarSaldo(a.getCostoAdicional()))
+                return "Saldo insuficiente para acceder a esta atracción";
+        }
+
+        ColaPrioridad<Visitante> cola = colasPorAtraccion.get(atraccionId);
+        cola.insertar(v, v.getPrioridad());
+        return "OK";
+    }
+
+    /** Procesa el siguiente visitante de la cola de una atracción. */
+    public Visitante procesarSiguiente(String atraccionId){
+        ColaPrioridad<Visitante> cola = colasPorAtraccion.get(atraccionId);
+        if (cola == null || cola.estaVacia()) return null;
+        Visitante v = cola.extraer();
+        Atraccion a = atracciones.get(atraccionId);
+        if (a != null) {
+            boolean mantenimiento = a.registrarVisitante();
+            v.registrarVisita(atraccionId);
+            if (mantenimiento) {
+                // notificar (aquí solo se registra; la GUI debe consultarlo)
+                System.out.println("[ALERTA] Atracción " + a.getNombre() + " entra en mantenimiento preventivo.");
+            }
+        }
+        return v;
+    }
+
+    /** Retorna el tamaño actual de la cola de una atracción. */
+    public int tamanioCola(String atraccionId){
+        ColaPrioridad<Visitante> cola = colasPorAtraccion.get(atraccionId);
+        return cola != null ? cola.tamanio() : 0;
+    }
+
+    // ────────────────────────────────────────────────────────────────
+    //  CLIMA
+    // ────────────────────────────────────────────────────────────────
+
+    /**
+     * Activa una alerta climática y cierra automáticamente las atracciones
+     * de tipo ACUATICA o MECANICA_ALTURA.
+     */
+    public List<String> activarAlertaClimatica(String tipoAlerta) {
+        this.alertaClimatica = true;
+        this.tipoAlerta = tipoAlerta;
+        List<String> cerradas = new ArrayList<>();
+        for (Atraccion a : atracciones.values()) {
+            if (a.getTipo() == TipoAtraccion.ACUATICA || a.getTipo() == TipoAtraccion.MECANICA_ALTURA) {
+                if (a.getEstado() == EstadoAtraccion.ACTIVA) {
+                    a.cerrar("Cierre por alerta climática: " + tipoAlerta);
+                    cerradas.add(a.getId());
+                }
+            }
+        }
+        return cerradas;
+    }
+
+    /** Desactiva la alerta climática. (Las atracciones deben reactivarse manualmente.) */
+    public void desactivarAlertaClimatica(){
+        this.alertaClimatica = false;
+        this.tipoAlerta = "";
+    }
+
+    public boolean isAlertaClimatica(){ 
+        return alertaClimatica; 
+    }
+    public String  getTipoAlerta(){ 
+        return tipoAlerta; 
+    }
+
 }
