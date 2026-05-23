@@ -25,6 +25,18 @@ public class ClimaController {
             parqueService.desactivarAlertaClimatica();
             ctx.result("Alerta climática desactivada");
         });
+        // POST /clima/alerta → activar alerta climática
+        // Body: { "tipo": "TORMENTA_ELECTRICA" | "LLUVIA_FUERTE" }
+        app.post("/clima/alerta", ctx -> {
+            @SuppressWarnings("unchecked")
+            Map<String, String> body = gson.fromJson(ctx.body(), Map.class);
+            String tipo = body.getOrDefault("tipo", "ALERTA_GENERAL");
+            List<String> cerradas = parqueService.activarAlertaClimatica(tipo);
+            ctx.json(gson.toJson(Map.of(
+                "mensaje",   "Alerta climática activada: " + tipo,
+                "cerradas",  cerradas
+            )));
+        });
     }
 }
 
