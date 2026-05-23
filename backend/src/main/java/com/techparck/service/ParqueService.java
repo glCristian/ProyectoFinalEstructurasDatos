@@ -44,5 +44,66 @@ public class ParqueService {
 
     // ── Constructor privado ────────────────────────────────────────────
     private ParqueService() {}
- 
+    
+        // ────────────────────────────────────────────────────────────────
+    //  ATRACCIONES
+    // ────────────────────────────────────────────────────────────────
+
+    /** Registra una nueva atracción en el sistema. */
+    public boolean agregarAtraccion(Atraccion a) {
+        if (atracciones.containsKey(a.getId())) return false;
+        atracciones.put(a.getId(), a);
+        arbolAtracciones.insertar(a.getNombre().toLowerCase(), a);
+        grafo.agregarNodo(a.getId());
+        colasPorAtraccion.put(a.getId(), new ColaPrioridad<>());
+        return true;
+    }
+
+    /** Retorna una atracción por ID. */
+    public Atraccion getAtraccion(String id) { return atracciones.get(id); }
+
+    /** Retorna todas las atracciones. */
+    public Collection<Atraccion> getAtracciones() { return atracciones.values(); }
+
+    /** Busca una atracción por nombre (ABB). */
+    public Atraccion buscarAtraccionPorNombre(String nombre) {
+        return arbolAtracciones.buscar(nombre.toLowerCase());
+    }
+
+    /** Actualiza el estado de una atracción. */
+    public boolean actualizarEstadoAtraccion(String id, EstadoAtraccion estado, String motivo) {
+        Atraccion a = atracciones.get(id);
+        if (a == null) return false;
+        a.setEstado(estado);
+        a.setMotivoCierre(estado == EstadoAtraccion.ACTIVA ? null : motivo);
+        return true;
+    }
+
+    /** Elimina una atracción. */
+    public boolean eliminarAtraccion(String id) {
+        Atraccion a = atracciones.remove(id);
+        if (a == null) return false;
+        arbolAtracciones.eliminar(a.getNombre().toLowerCase());
+        grafo.eliminarNodo(id);
+        colasPorAtraccion.remove(id);
+        return true;
+    }
+
+    // ────────────────────────────────────────────────────────────────
+    //  ZONAS
+    // ────────────────────────────────────────────────────────────────
+
+    public boolean agregarZona(Zona z) {
+        if (zonas.containsKey(z.getId())) return false;
+        zonas.put(z.getId(), z);
+        return true;
+    }
+
+    public Zona getZona(String id) { return zonas.get(id); }
+    public Collection<Zona> getZonas() { return zonas.values(); }
+
+    public boolean eliminarZona(String id) {
+        return zonas.remove(id) != null;
+    }
+
 }
