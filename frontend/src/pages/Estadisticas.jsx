@@ -28,7 +28,7 @@ export default function Estadisticas() {
     ])
     if (tr.ok)   setTop(tr.data)
     if (mr.ok)   setMant(mr.data)
-    if (cr.ok)   setCierres(cr.data)
+    if (cr.ok)   setCierres(Array.isArray(cr.data) ? cr.data : [])
     if (ir.ok)   setIngreso(ir.data.ingresoDiario)
     if (er.ok)   setEspera(er.data.tiempoPromedioEspera)
     if (afor.ok) setAforo(afor.data)
@@ -39,10 +39,18 @@ export default function Estadisticas() {
   useEffect(() => { cargar() }, [])
 
   const fmtPeso = n => typeof n === 'number' ? `$${n.toLocaleString('es-CO')}` : '—'
+  const fmtFecha = value => {
+    if (!value) return '—'
+    const fecha = new Date(value)
+    if (Number.isNaN(fecha.getTime())) return String(value)
+    return fecha.toLocaleString('es-CO', { dateStyle: 'short', timeStyle: 'short' })
+  }
   const badgeEstado = (estado) => {
     const cls = { ACTIVA:'badge-activa', EN_MANTENIMIENTO:'badge-mantenimiento', CERRADA:'badge-cerrada' }[estado] ?? 'badge-cerrada'
     return <span className={`badge ${cls}`}>{estado?.replace('_',' ')}</span>
   }
+
+  const cierresClimaOrdenados = Array.isArray(cierresClima) ? [...cierresClima].reverse() : []
 
   if (loading) return (
     <div>
@@ -90,7 +98,7 @@ export default function Estadisticas() {
           <span className="stat-value" style={{ color: 'var(--color-warning)' }}>{mantenimiento.length}</span>
         </div>
         <div className="stat-card">
-          <span className="stat-label">⛈️ Cerradas clima</span>
+          <span className="stat-label">⛈️ Eventos clima</span>
           <span className="stat-value" style={{ color: 'var(--color-danger)' }}>{cierresClima.length}</span>
         </div>
       </div>
@@ -128,13 +136,14 @@ export default function Estadisticas() {
       <TablaEstadisticas
         titulo="⛈️ CIERRES POR CONDICIONES CLIMÁTICAS"
         columnas={[
-          { key: 'id',           label: 'ID' },
-          { key: 'nombre',       label: 'Atracción' },
-          { key: 'tipo',         label: 'Tipo', render: v => v?.replace('_',' ') },
-          { key: 'motivoCierre', label: 'Motivo' },
-          { key: 'zonaId',       label: 'Zona' },
+          { key: 'fechaCierre',    label: 'Fecha', render: v => fmtFecha(v) },
+          { key: 'atraccionId',    label: 'ID' },
+          { key: 'atraccionNombre', label: 'Atracción' },
+          { key: 'tipoAtraccion',  label: 'Tipo', render: v => v?.replace('_',' ') },
+          { key: 'tipoAlerta',     label: 'Alerta' },
+          { key: 'motivoCierre',   label: 'Motivo' },
         ]}
-        filas={cierresClima}
+        filas={cierresClimaOrdenados}
         emptyMsg="☀️ No hay cierres registrados por clima"
       />
 
