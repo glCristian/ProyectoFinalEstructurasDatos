@@ -77,4 +77,27 @@ public class TechParkTest {
 
         assertTrue(cola.estaVacia());
     }
+
+    @Test @Order(4)
+    @DisplayName("ABB: insertar, buscar, inorden y eliminar")
+    void testABB() {
+        ABB<String, Integer> abb = new ABB<>();
+
+        abb.insertar("montaña rusa", 3);
+        abb.insertar("caída libre",  5);
+        abb.insertar("tobogán",      1);
+        abb.insertar("carrusel",     2);
+
+        assertEquals(4, abb.tamanio());
+        assertEquals(3,  abb.buscar("montaña rusa"));
+        assertNull(abb.buscar("fantasma")); // no existe
+
+        // inorden → orden alfabético
+        List<Integer> inorden = abb.inorden();
+        assertEquals(List.of(5, 2, 3, 1), inorden); // c < m < t (en español)
+
+        abb.eliminar("montaña rusa");
+        assertFalse(abb.contiene("montaña rusa"));
+        assertEquals(3, abb.tamanio());
+    }
 }
