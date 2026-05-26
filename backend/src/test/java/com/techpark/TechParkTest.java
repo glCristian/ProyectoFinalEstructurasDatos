@@ -35,6 +35,9 @@ public class TechParkTest {
         assertEquals("A3", lista.obtener(1));
     }
 
+    // ────────────────────────────────────────────────────────────────
+    //  PRUEBA 2: Set Propio (favoritos)
+    // ────────────────────────────────────────────────────────────────
     @Test @Order(2)
     @DisplayName("SetPropio: sin duplicados, agregar y eliminar")
     void testSetPropio() {
@@ -54,6 +57,9 @@ public class TechParkTest {
         assertEquals(1, set.tamanio());
     }
 
+    // ────────────────────────────────────────────────────────────────
+    //  PRUEBA 3: Cola de Prioridad (FastPass antes que General)
+    // ────────────────────────────────────────────────────────────────
     @Test @Order(3)
     @DisplayName("ColaPrioridad: FastPass (p=1) sale antes que General (p=2)")
     void testColaPrioridad() {
@@ -78,6 +84,9 @@ public class TechParkTest {
         assertTrue(cola.estaVacia());
     }
 
+    // ────────────────────────────────────────────────────────────────
+    //  PRUEBA 4: ABB (árbol binario de búsqueda)
+    // ────────────────────────────────────────────────────────────────
     @Test @Order(4)
     @DisplayName("ABB: insertar, buscar, inorden y eliminar")
     void testABB() {
@@ -101,6 +110,9 @@ public class TechParkTest {
         assertEquals(3, abb.tamanio());
     }
 
+    // ────────────────────────────────────────────────────────────────
+    //  PRUEBA 5: Grafo – BFS y Dijkstra
+    // ────────────────────────────────────────────────────────────────
     @Test @Order(5)
     @DisplayName("Grafo: BFS alcanza todos los nodos y Dijkstra encuentra camino mínimo")
     void testGrafo() {
@@ -127,6 +139,9 @@ public class TechParkTest {
         assertFalse(grafo.estanConectados("A1", "AISLADO"));
     }
 
+    // ────────────────────────────────────────────────────────────────
+    //  PRUEBA 6: Mantenimiento preventivo (500 visitantes)
+    // ────────────────────────────────────────────────────────────────
     @Test @Order(6)
     @DisplayName("Atraccion: mantenimiento automático al alcanzar 500 visitantes")
     void testMantenimientoPreventivo() {
@@ -149,6 +164,9 @@ public class TechParkTest {
         assertEquals(0, a.getVisitantesAcumulados());
     }
 
+    // ────────────────────────────────────────────────────────────────
+    //  PRUEBA 7: Alerta climática cierra atracciones correctas
+    // ────────────────────────────────────────────────────────────────
     @Test @Order(7)
     @DisplayName("ParqueService: alerta climática cierra solo ACUATICA y MECANICA_ALTURA")
     void testAlertaClimatica() {
@@ -174,5 +192,31 @@ public class TechParkTest {
 
         srv.desactivarAlertaClimatica();
         assertFalse(srv.isAlertaClimatica());
+    }
+
+    // ────────────────────────────────────────────────────────────────
+    //  PRUEBA 8: Visitante – favoritos e historial
+    // ────────────────────────────────────────────────────────────────
+    @Test @Order(8)
+    @DisplayName("Visitante: historial (ListaEnlazada) y favoritos (SetPropio)")
+    void testVisitanteFavoritosHistorial() {
+        Visitante v = new Visitante("TST1", "Test User", "000", 25, 1.70);
+
+        v.registrarVisita("A1");
+        v.registrarVisita("A2");
+        v.registrarVisita("A1"); // puede repetirse en historial
+
+        assertEquals(3, v.getHistorialVisitas().tamanio());
+
+        v.agregarFavorito("A1");
+        v.agregarFavorito("A3");
+        v.agregarFavorito("A1"); // duplicado → no debe agregar
+
+        assertEquals(2, v.getFavoritos().tamanio());
+        assertTrue(v.esFavorito("A1"));
+        assertFalse(v.esFavorito("A9"));
+
+        v.eliminarFavorito("A1");
+        assertFalse(v.esFavorito("A1"));
     }
 }
