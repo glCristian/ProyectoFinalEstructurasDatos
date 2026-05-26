@@ -100,4 +100,30 @@ public class TechParkTest {
         assertFalse(abb.contiene("montaña rusa"));
         assertEquals(3, abb.tamanio());
     }
+
+    @Test @Order(5)
+    @DisplayName("Grafo: BFS alcanza todos los nodos y Dijkstra encuentra camino mínimo")
+    void testGrafo() {
+        Grafo grafo = new Grafo();
+        grafo.conectar("A1", "A2", 10);
+        grafo.conectar("A2", "A3", 5);
+        grafo.conectar("A1", "A3", 20);
+        grafo.conectar("A3", "A4", 3);
+
+        // BFS desde A1 debe visitar todos
+        List<String> bfs = grafo.bfs("A1");
+        assertEquals(4, bfs.size());
+        assertTrue(bfs.contains("A4"));
+
+        // Dijkstra A1→A4: camino mínimo es A1→A2→A3→A4 = 18
+        List<String> camino = grafo.dijkstra("A1", "A4");
+        assertFalse(camino.isEmpty());
+        assertEquals("A1", camino.get(0));
+        assertEquals("A4", camino.get(camino.size() - 1));
+        assertEquals(18.0, grafo.distanciaDijkstra("A1", "A4"), 0.001);
+
+        // Nodo desconectado
+        grafo.agregarNodo("AISLADO");
+        assertFalse(grafo.estanConectados("A1", "AISLADO"));
+    }
 }
