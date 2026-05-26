@@ -35,4 +35,22 @@ public class TechParkTest {
         assertEquals("A3", lista.obtener(1));
     }
 
+    @Test @Order(2)
+    @DisplayName("SetPropio: sin duplicados, agregar y eliminar")
+    void testSetPropio() {
+        SetPropio<String> set = new SetPropio<>();
+        assertTrue(set.estaVacio());
+
+        assertTrue(set.agregar("A1"));
+        assertTrue(set.agregar("A2"));
+        assertFalse(set.agregar("A1")); // duplicado
+
+        assertEquals(2, set.tamanio());
+        assertTrue(set.contiene("A1"));
+        assertFalse(set.contiene("A9"));
+
+        assertTrue(set.eliminar("A1"));
+        assertFalse(set.contiene("A1"));
+        assertEquals(1, set.tamanio());
+    }
 }
