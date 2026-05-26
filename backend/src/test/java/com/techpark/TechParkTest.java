@@ -53,4 +53,28 @@ public class TechParkTest {
         assertFalse(set.contiene("A1"));
         assertEquals(1, set.tamanio());
     }
+
+    @Test @Order(3)
+    @DisplayName("ColaPrioridad: FastPass (p=1) sale antes que General (p=2)")
+    void testColaPrioridad() {
+        ColaPrioridad<String> cola = new ColaPrioridad<>();
+
+        cola.insertar("Visitante-General-1",  2);
+        cola.insertar("Visitante-General-2",  2);
+        cola.insertar("Visitante-FastPass-1", 1); // prioridad alta
+        cola.insertar("Visitante-General-3",  2);
+        cola.insertar("Visitante-FastPass-2", 1); // prioridad alta
+
+        assertEquals(5, cola.tamanio());
+
+        // Los FastPass deben salir primero, y en orden FIFO
+        assertEquals("Visitante-FastPass-1", cola.extraer());
+        assertEquals("Visitante-FastPass-2", cola.extraer());
+        // Luego los General en orden de inserción
+        assertEquals("Visitante-General-1",  cola.extraer());
+        assertEquals("Visitante-General-2",  cola.extraer());
+        assertEquals("Visitante-General-3",  cola.extraer());
+
+        assertTrue(cola.estaVacia());
+    }
 }
