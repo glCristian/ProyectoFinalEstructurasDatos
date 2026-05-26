@@ -1,0 +1,95 @@
+[
+  {
+    "id": "Z1",
+    "nombre": "Zona Acuática",
+    "capacidadMaxima": 300,
+    "visitantesActuales": 0,
+    "idsAtracciones": {
+      "cabeza": {
+        "dato": "A1",
+        "siguiente": {
+          "dato": "A2"
+        }
+      },
+      "tamanio": 2
+    },
+    "idsOperadores": {
+      "cabeza": {
+        "dato": "OP1",
+        "siguiente": {
+          "dato": "OP2"
+        }
+      },
+      "tamanio": 2
+    }
+  },
+  {
+    "id": "Z2",
+    "nombre": "Zona Mecánica",
+    "capacidadMaxima": 250,
+    "visitantesActuales": 0,
+    "idsAtracciones": {
+      "cabeza": {
+        "dato": "A3",
+        "siguiente": {
+          "dato": "A4"
+        }
+      },
+      "tamanio": 2
+    },
+    "idsOperadores": {
+      "cabeza": {
+        "dato": "OP2",
+        "siguiente": {
+          "dato": "OP1"
+        }
+      },
+      "tamanio": 2
+    }
+  },
+  {
+    "id": "Z3",
+    "nombre": "Zona Familiar",
+    "capacidadMaxima": 400,
+    "visitantesActuales": 0,
+    "idsAtracciones": {
+      "cabeza": {
+        "dato": "A5",
+        "siguiente": {
+          "dato": "A6"
+        }
+      },
+      "tamanio": 2
+    },
+    "idsOperadores": {
+      "cabeza": {
+        "dato": "OP3"
+      },
+      "tamanio": 1
+    }
+  },
+  {
+    "id": "Z4",
+    "nombre": "Zona Shows",
+    "capacidadMaxima": 500,
+    "visitantesActuales": 0,
+    "idsAtracciones": {
+      "cabeza": {
+        "dato": "A7",
+        "siguiente": {
+          "dato": "A8"
+        }
+      },
+      "tamanio": 2
+    },
+    "idsOperadores": {
+      "cabeza": {
+        "dato": "OP4",
+        "siguiente": {
+          "dato": "0001"
+        }
+      },
+      "tamanio": 2
+    }
+  }
+]

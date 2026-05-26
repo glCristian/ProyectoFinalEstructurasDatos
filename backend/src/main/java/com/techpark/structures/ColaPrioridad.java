@@ -1,5 +1,16 @@
-package main.java.com.techparck.structures;
+package com.techpark.structures;
 
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Cola de prioridad implementada manualmente con min-heap.
+ * Gestiona la fila de ingreso a las atracciones:
+ *   Prioridad 1 → FastPass  (se atiende primero)
+ *   Prioridad 2 → General / Familiar
+ *
+ * @param <T> tipo de dato almacenado.
+ */
 public class ColaPrioridad<T> {
 
     // ── Nodo con prioridad ────────────────────────────────────────────
@@ -67,6 +78,39 @@ public class ColaPrioridad<T> {
         contadorOrden = 0L;
     }
 
+    /** Retorna una lista con los elementos actuales (sin alterar el heap). */
+    public List<T> toList() {
+        List<T> lista = new ArrayList<>(tamanio);
+        for (int i = 0; i < tamanio; i++) {
+            if (heap[i] != null) lista.add(heap[i].dato);
+        }
+        return lista;
+    }
+
+    /**
+     * Retorna una lista ordenada por prioridad (sin alterar el heap).
+     * El orden respeta la prioridad y el FIFO interno de la cola.
+     */
+    public List<T> toOrderedList() {
+        List<T> ordenada = new ArrayList<>(tamanio);
+        if (tamanio == 0) return ordenada;
+
+        @SuppressWarnings("unchecked")
+        Elemento<T>[] copia = new Elemento[tamanio];
+        System.arraycopy(heap, 0, copia, 0, tamanio);
+
+        int size = tamanio;
+        while (size > 0) {
+            Elemento<T> top = copia[0];
+            ordenada.add(top.dato);
+            copia[0] = copia[--size];
+            copia[size] = null;
+            if (size > 0) bajarBurbujaCopia(copia, size, 0);
+        }
+
+        return ordenada;
+    }
+
     // ── Auxiliares del heap ───────────────────────────────────────────
 
     private void subirBurbuja(int i) {
@@ -88,6 +132,22 @@ public class ColaPrioridad<T> {
             if (der < tamanio && comparar(heap[der], heap[menor]) < 0) menor = der;
             if (menor != i) { intercambiar(i, menor); i = menor; }
             else break;
+        }
+    }
+
+    private void bajarBurbujaCopia(Elemento<T>[] arr, int size, int i) {
+        while (true) {
+            int izq   = 2 * i + 1;
+            int der   = 2 * i + 2;
+            int menor = i;
+            if (izq < size && comparar(arr[izq], arr[menor]) < 0) menor = izq;
+            if (der < size && comparar(arr[der], arr[menor]) < 0) menor = der;
+            if (menor != i) {
+                Elemento<T> tmp = arr[i];
+                arr[i] = arr[menor];
+                arr[menor] = tmp;
+                i = menor;
+            } else break;
         }
     }
 

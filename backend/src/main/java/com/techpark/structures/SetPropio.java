@@ -1,8 +1,17 @@
-package main.java.com.techparck.structures;
+package com.techpark.structures;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
+/**
+ * Set propio implementado manualmente con tabla hash (encadenamiento).
+ * Usado para almacenar las atracciones favoritas de cada visitante.
+ * No permite duplicados.
+ *
+ * @param <T> tipo de dato almacenado.
+ */
 public class SetPropio<T> implements Iterable<T> {
 
     private static final int CAPACIDAD_INICIAL = 16;
@@ -26,6 +35,19 @@ public class SetPropio<T> implements Iterable<T> {
     private int capacidad = CAPACIDAD_INICIAL;
 
     // ── Operaciones ───────────────────────────────────────────────────
+
+
+    /**
+     * Convierte el set a un Set de Java. Útil para interoperabilidad.
+     * @return
+     */
+    public Set<T> toSet() {
+        Set<T> result = new HashSet<>();
+        for (T item : this)
+            result.add(item);
+        return result;
+    }
+
 
     /** Agrega un elemento al set. Retorna false si ya existe. */
     public boolean agregar(T dato) {

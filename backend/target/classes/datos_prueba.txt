@@ -1,0 +1,49 @@
+# ──────────────────────────────────────────────────────────────────
+#  ARCHIVO DE DATOS DE PRUEBA — Tech-Park UQ
+#  Formato: TIPO;campo1;campo2;...
+#  Líneas vacías y líneas que comienzan con # son ignoradas.
+# ──────────────────────────────────────────────────────────────────
+
+# ZONA;id;nombre;capacidad
+ZONA;Z1;Zona Acuática;300
+ZONA;Z2;Zona Mecánica;250
+ZONA;Z3;Zona Familiar;400
+ZONA;Z4;Zona Shows;500
+
+# ATRACCION;id;nombre;tipo;capacidadCiclo;alturaMin;edadMin;costoAdicional;zonaId
+ATRACCION;A1;Tobogán Extremo;ACUATICA;20;1.40;12;0;Z1
+ATRACCION;A2;Ola Gigante;ACUATICA;30;1.20;10;5000;Z1
+ATRACCION;A3;Montaña Rusa;MECANICA_ALTURA;24;1.45;14;8000;Z2
+ATRACCION;A4;Caída Libre;MECANICA_ALTURA;12;1.50;16;10000;Z2
+ATRACCION;A5;Carros Chocones;MECANICA_SUELO;16;1.10;8;3000;Z3
+ATRACCION;A6;Carrusel Mágico;FAMILIAR;20;0.80;4;0;Z3
+ATRACCION;A7;Show Láser;SHOW;200;0;0;0;Z4
+ATRACCION;A8;Teatro Acuático;SHOW;150;0;0;5000;Z4
+
+# CONEXION;idA;idB;peso (metros)
+CONEXION;A1;A2;50
+CONEXION;A1;A5;120
+CONEXION;A2;A3;80
+CONEXION;A3;A4;30
+CONEXION;A3;A7;150
+CONEXION;A4;A5;90
+CONEXION;A5;A6;40
+CONEXION;A6;A7;70
+CONEXION;A7;A8;20
+CONEXION;A8;A1;200
+
+# OPERADOR;id;nombre;documento;zonaId
+OPERADOR;OP1;Carlos Rueda;1001;Z1
+OPERADOR;OP2;María López;1002;Z2
+OPERADOR;OP3;Juan Sosa;1003;Z3
+OPERADOR;OP4;Ana Torres;1004;Z4
+
+# ADMIN;id;nombre;documento;clave
+ADMIN;ADM1;Director General;9999;admin123
+
+# VISITANTE;id;nombre;documento;edad;altura;saldo;tipoTicket;precioTicket
+VISITANTE;V1;Pedro Ramos;555001;25;1.75;50000;FAST_PASS;60000
+VISITANTE;V2;Laura Díaz;555002;17;1.60;20000;GENERAL;40000
+VISITANTE;V3;Familia García;555003;35;1.65;80000;FAMILIAR;100000
+VISITANTE;V4;Sofía Martínez;555004;22;1.55;35000;GENERAL;40000
+VISITANTE;V5;Carlos Junior;555005;14;1.48;15000;FAST_PASS;60000

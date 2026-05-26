@@ -1,0 +1,124 @@
+[
+  {
+    "id": "cristian",
+    "nombre": "Cristian",
+    "documento": "1115",
+    "edad": 20,
+    "altura": 1.72,
+    "username": "cristian",
+    "passwordHash": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
+    "saldoVirtual": 185000.0,
+    "ticketComprado": {
+      "id": "T-cristian",
+      "tipo": "FAST_PASS",
+      "visitanteId": "cristian",
+      "fechaEmision": "2026-05-24",
+      "fechaVencimiento": "2026-05-24",
+      "activo": true,
+      "precio": 65000.0,
+      "numeroPersonasIncluidas": 1,
+      "miembrosDeLaFamilia": [
+        {
+          "id": "cristian",
+          "nombre": "Cristian",
+          "documento": "1115",
+          "edad": 20,
+          "altura": 1.72
+        }
+      ],
+      "precioCompra": 65000.0,
+      "fechaCompra": "2026-05-24T19:04:14.282667231"
+    },
+    "puedeDentrar": true,
+    "numeroPersonasFamilia": 1,
+    "historialVisitas": {
+      "cabeza": {
+        "dato": "A4",
+        "siguiente": {
+          "dato": "A3"
+        }
+      },
+      "tamanio": 2
+    },
+    "favoritos": {
+      "tabla": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "tamanio": 0,
+      "capacidad": 16
+    }
+  },
+  {
+    "id": "ali",
+    "nombre": "ali",
+    "documento": "1090",
+    "edad": 19,
+    "altura": 1.6,
+    "username": "ali",
+    "passwordHash": "b7768fbb1847758d75c3ee28c3e2391e70c6ee29f7ce19847822bd5a7381ac67",
+    "saldoVirtual": 9.999935E9,
+    "ticketComprado": {
+      "id": "T-ali",
+      "tipo": "FAST_PASS",
+      "visitanteId": "ali",
+      "fechaEmision": "2026-05-25",
+      "fechaVencimiento": "2026-05-25",
+      "activo": true,
+      "precio": 65000.0,
+      "numeroPersonasIncluidas": 1,
+      "miembrosDeLaFamilia": [
+        {
+          "id": "ali",
+          "nombre": "ali",
+          "documento": "1090",
+          "edad": 19,
+          "altura": 1.6
+        }
+      ],
+      "precioCompra": 65000.0,
+      "fechaCompra": "2026-05-25T11:51:30.969405329"
+    },
+    "puedeDentrar": true,
+    "numeroPersonasFamilia": 1,
+    "historialVisitas": {
+      "tamanio": 0
+    },
+    "favoritos": {
+      "tabla": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "tamanio": 0,
+      "capacidad": 16
+    }
+  }
+]

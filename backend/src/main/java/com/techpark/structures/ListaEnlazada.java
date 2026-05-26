@@ -1,8 +1,19 @@
-package main.java.com.techparck.structures;
+package com.techpark.structures;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.NoSuchElementException;
 
+/**
+ * Lista enlazada simple genérica implementada manualmente.
+ * Usada para:
+ *  - Historial de visitas del visitante.
+ *  - Lista de operadores asignados a una zona.
+ *  - Lista de IDs de atracciones por zona.
+ *
+ * @param <T> tipo de dato almacenado.
+ */
 public class ListaEnlazada<T> implements Iterable<T> {
 
     // ── Nodo interno ──────────────────────────────────────────────────
@@ -16,16 +27,28 @@ public class ListaEnlazada<T> implements Iterable<T> {
         }
     }
 
-    // ── Atributos y Constructor ────────────────────────────────────────
+    // ── Atributos ─────────────────────────────────────────────────────
     private Nodo<T> cabeza;
     private int     tamanio;
-    
+
+    // ── Constructores ──────────────────────────────────────────────────
     public ListaEnlazada() {
         this.cabeza  = null;
         this.tamanio = 0;
     }
 
     // ── Operaciones ───────────────────────────────────────────────────
+
+    /**
+     * Convierte la lista a un List de Java. Útil para interoperabilidad.
+     */
+    public List<T> toList() {
+        List<T> result = new ArrayList<>();
+        for (T item : this)
+            result.add(item);
+        return result;
+    }
+
 
     /** Agrega un elemento al final de la lista. */
     public void agregar(T dato) {

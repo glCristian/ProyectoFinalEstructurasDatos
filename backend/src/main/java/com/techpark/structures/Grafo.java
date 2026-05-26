@@ -1,7 +1,12 @@
-package main.java.com.techparck.structures;
+package com.techpark.structures;
 
 import java.util.*;
 
+/**
+ * Grafo no dirigido con pesos, implementado mediante lista de adyacencia.
+ * Los nodos representan atracciones; las aristas, senderos con peso (distancia/tiempo).
+ * Incluye BFS y Dijkstra implementados sin librerías de Java (excepto Map/List auxiliares).
+ */
 public class Grafo {
 
     // ── Arista ────────────────────────────────────────────────────────
@@ -68,6 +73,11 @@ public class Grafo {
         return nodos.keySet();
     }
 
+    /** Limpia completamente el grafo. */
+    public void limpiar() {
+        nodos.clear();
+    }
+
     /** Retorna el NodoGrafo con el ID indicado. */
     public NodoGrafo getNodo(String id) {
         return nodos.get(id);
@@ -97,7 +107,7 @@ public class Grafo {
         NodoGrafo n = nodos.get(id);
         return n != null ? n.getVecinos() : Collections.emptyList();
     }
-    
+
     // ── Algoritmos ────────────────────────────────────────────────────
 
     /**

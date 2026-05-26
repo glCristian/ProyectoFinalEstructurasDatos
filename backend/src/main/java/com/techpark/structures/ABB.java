@@ -1,9 +1,20 @@
-package main.java.com.techparck.structures;
+package com.techpark.structures;
 
+import java.text.Collator;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
+/**
+ * Árbol Binario de Búsqueda (ABB) implementado manualmente.
+ * Organiza el catálogo de atracciones por nombre o ID para búsquedas rápidas.
+ *
+ * @param <K> tipo de clave comparable (String para nombre/ID).
+ * @param <V> tipo de valor almacenado (Atraccion).
+ */
 public class ABB<K extends Comparable<K>, V> {
+
+    private final Collator collator;
 
     // ── Nodo interno ──────────────────────────────────────────────────
     private static class Nodo<K, V> {
@@ -24,6 +35,12 @@ public class ABB<K extends Comparable<K>, V> {
     private Nodo<K, V> raiz;
     private int tamanio = 0;
 
+    public ABB() {
+        // Collator para comparación en español que ignora diacríticos (e.g., í vs i)
+        collator = Collator.getInstance(new Locale("es", "ES"));
+        collator.setStrength(Collator.PRIMARY);
+    }
+
     // ── Operaciones ───────────────────────────────────────────────────
 
     /** Inserta una clave-valor. Si la clave existe, actualiza el valor. */
@@ -33,7 +50,7 @@ public class ABB<K extends Comparable<K>, V> {
 
     private Nodo<K, V> insertarRec(Nodo<K, V> nodo, K clave, V valor) {
         if (nodo == null) { tamanio++; return new Nodo<>(clave, valor); }
-        int cmp = clave.compareTo(nodo.clave);
+        int cmp = comparar(clave, nodo.clave);
         if      (cmp < 0) nodo.izquierdo = insertarRec(nodo.izquierdo, clave, valor);
         else if (cmp > 0) nodo.derecho   = insertarRec(nodo.derecho,   clave, valor);
         else               nodo.valor    = valor; // actualizar
@@ -48,7 +65,7 @@ public class ABB<K extends Comparable<K>, V> {
 
     private Nodo<K, V> buscarNodo(Nodo<K, V> nodo, K clave) {
         if (nodo == null) return null;
-        int cmp = clave.compareTo(nodo.clave);
+        int cmp = comparar(clave, nodo.clave);
         if      (cmp < 0) return buscarNodo(nodo.izquierdo, clave);
         else if (cmp > 0) return buscarNodo(nodo.derecho,   clave);
         else               return nodo;
@@ -61,7 +78,7 @@ public class ABB<K extends Comparable<K>, V> {
 
     private Nodo<K, V> eliminarRec(Nodo<K, V> nodo, K clave) {
         if (nodo == null) return null;
-        int cmp = clave.compareTo(nodo.clave);
+        int cmp = comparar(clave, nodo.clave);
         if (cmp < 0) {
             nodo.izquierdo = eliminarRec(nodo.izquierdo, clave);
         } else if (cmp > 0) {
@@ -74,8 +91,22 @@ public class ABB<K extends Comparable<K>, V> {
             Nodo<K, V> sucesor = minimo(nodo.derecho);
             nodo.clave  = sucesor.clave;
             nodo.valor  = sucesor.valor;
-            nodo.derecho = eliminarRec(nodo.derecho, sucesor.clave);
+            nodo.derecho = eliminarMinimo(nodo.derecho);
         }
+        return nodo;
+    }
+
+    /** Elimina el nodo mínimo de un subárbol sin modificar el tamaño global.
+     *  Se usa internamente cuando un nodo con dos hijos se reemplaza por su sucesor.
+     */
+    private Nodo<K, V> eliminarMinimo(Nodo<K, V> nodo) {
+        if (nodo == null) {
+            return null;
+        }
+        if (nodo.izquierdo == null) {
+            return nodo.derecho;
+        }
+        nodo.izquierdo = eliminarMinimo(nodo.izquierdo);
         return nodo;
     }
 
@@ -106,4 +137,14 @@ public class ABB<K extends Comparable<K>, V> {
 
     /** Verifica si el árbol está vacío. */
     public boolean estaVacio() { return raiz == null; }
+
+    /** Comparador genérico: si las claves son Strings usamos Collator (español, sin diacríticos),
+     *  en otro caso usamos compareTo estándar.
+     */
+    private int comparar(K a, K b) {
+        if (a instanceof String && b instanceof String) {
+            return collator.compare((String) a, (String) b);
+        }
+        return ((Comparable<K>) a).compareTo(b);
+    }
 }

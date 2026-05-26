@@ -1,0 +1,208 @@
+[
+  {
+    "id": "A1",
+    "nombre": "Tobogán Extremo",
+    "tipo": "ACUATICA",
+    "capacidadMaximaPorCiclo": 20,
+    "alturaMinima": 1.4,
+    "edadMinima": 12,
+    "costoAdicional": 0.0,
+    "estado": "ACTIVA",
+    "visitantesAcumulados": 1,
+    "tiempoEsperaEstimado": 0.0,
+    "incidentesOperativos": 0,
+    "zonaId": "Z1",
+    "posicionX": 91.05972826196364,
+    "posicionY": 162.03008022500399,
+    "conexiones": [
+      "A2",
+      "A8"
+    ],
+    "pesosConexiones": {
+      "A2": 55.0,
+      "A8": 50.0
+    }
+  },
+  {
+    "id": "A2",
+    "nombre": "Ola Gigante",
+    "tipo": "ACUATICA",
+    "capacidadMaximaPorCiclo": 30,
+    "alturaMinima": 1.2,
+    "edadMinima": 10,
+    "costoAdicional": 5000.0,
+    "estado": "ACTIVA",
+    "visitantesAcumulados": 0,
+    "tiempoEsperaEstimado": 0.0,
+    "incidentesOperativos": 0,
+    "zonaId": "Z1",
+    "posicionX": 234.78965812434447,
+    "posicionY": 190.94705231458153,
+    "conexiones": [
+      "A1",
+      "A3",
+      "A8",
+      "A7",
+      "A6"
+    ],
+    "pesosConexiones": {
+      "A1": 55.0,
+      "A8": 40.0,
+      "A3": 70.0,
+      "A7": 40.0,
+      "A6": 40.0
+    }
+  },
+  {
+    "id": "A3",
+    "nombre": "Montaña Rusa",
+    "tipo": "MECANICA_ALTURA",
+    "capacidadMaximaPorCiclo": 24,
+    "alturaMinima": 1.45,
+    "edadMinima": 14,
+    "costoAdicional": 8000.0,
+    "estado": "ACTIVA",
+    "visitantesAcumulados": 4,
+    "tiempoEsperaEstimado": 0.0,
+    "incidentesOperativos": 0,
+    "zonaId": "Z2",
+    "posicionX": 474.0116090762308,
+    "posicionY": 197.40730415050123,
+    "conexiones": [
+      "A2",
+      "A4",
+      "A6"
+    ],
+    "pesosConexiones": {
+      "A2": 70.0,
+      "A6": 55.0
+    }
+  },
+  {
+    "id": "A4",
+    "nombre": "Caída Libre",
+    "tipo": "MECANICA_ALTURA",
+    "capacidadMaximaPorCiclo": 12,
+    "alturaMinima": 1.5,
+    "edadMinima": 16,
+    "costoAdicional": 10000.0,
+    "estado": "ACTIVA",
+    "visitantesAcumulados": 4,
+    "tiempoEsperaEstimado": 0.0,
+    "incidentesOperativos": 0,
+    "zonaId": "Z2",
+    "posicionX": 474.5786099467089,
+    "posicionY": 294.04011962321715,
+    "conexiones": [
+      "A3",
+      "A5"
+    ],
+    "pesosConexiones": {
+      "A5": 40.0
+    }
+  },
+  {
+    "id": "A5",
+    "nombre": "Carros Chocones",
+    "tipo": "MECANICA_SUELO",
+    "capacidadMaximaPorCiclo": 16,
+    "alturaMinima": 1.1,
+    "edadMinima": 8,
+    "costoAdicional": 3000.0,
+    "estado": "ACTIVA",
+    "visitantesAcumulados": 0,
+    "tiempoEsperaEstimado": 5.0,
+    "incidentesOperativos": 0,
+    "zonaId": "Z3",
+    "posicionX": 395.7375074168395,
+    "posicionY": 376.94386263299805,
+    "conexiones": [
+      "A4",
+      "A6",
+      "A7"
+    ],
+    "pesosConexiones": {
+      "A6": 50.0,
+      "A7": 60.0,
+      "A4": 40.0
+    }
+  },
+  {
+    "id": "A6",
+    "nombre": "Carrusel Mágico",
+    "tipo": "FAMILIAR",
+    "capacidadMaximaPorCiclo": 20,
+    "alturaMinima": 0.8,
+    "edadMinima": 4,
+    "costoAdicional": 0.0,
+    "estado": "ACTIVA",
+    "visitantesAcumulados": 36,
+    "tiempoEsperaEstimado": 0.0,
+    "incidentesOperativos": 0,
+    "zonaId": "Z4",
+    "posicionX": 339.88649309597656,
+    "posicionY": 260.1119865447606,
+    "conexiones": [
+      "A5",
+      "A2",
+      "A3"
+    ],
+    "pesosConexiones": {
+      "A5": 50.0,
+      "A2": 40.0,
+      "A3": 55.0
+    }
+  },
+  {
+    "id": "A7",
+    "nombre": "Show Láser",
+    "tipo": "SHOW",
+    "capacidadMaximaPorCiclo": 200,
+    "alturaMinima": 0.0,
+    "edadMinima": 0,
+    "costoAdicional": 0.0,
+    "estado": "ACTIVA",
+    "visitantesAcumulados": 2,
+    "tiempoEsperaEstimado": 0.0,
+    "incidentesOperativos": 0,
+    "zonaId": "Z4",
+    "posicionX": 230.35356858173685,
+    "posicionY": 337.2815197353626,
+    "conexiones": [
+      "A5",
+      "A2",
+      "A8"
+    ],
+    "pesosConexiones": {
+      "A5": 60.0,
+      "A2": 40.0,
+      "A8": 55.0
+    }
+  },
+  {
+    "id": "A8",
+    "nombre": "Teatro Acuático",
+    "tipo": "SHOW",
+    "capacidadMaximaPorCiclo": 150,
+    "alturaMinima": 0.0,
+    "edadMinima": 0,
+    "costoAdicional": 5000.0,
+    "estado": "ACTIVA",
+    "visitantesAcumulados": 0,
+    "tiempoEsperaEstimado": 0.0,
+    "incidentesOperativos": 0,
+    "zonaId": "Z4",
+    "posicionX": 140.25757365272784,
+    "posicionY": 263.31821202253457,
+    "conexiones": [
+      "A1",
+      "A2",
+      "A7"
+    ],
+    "pesosConexiones": {
+      "A2": 40.0,
+      "A1": 50.0,
+      "A7": 55.0
+    }
+  }
+]
