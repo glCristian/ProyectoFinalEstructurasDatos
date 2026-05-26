@@ -1,61 +1,50 @@
-package main.java.com.techparck.model;
+package com.techpark.model;
 
-//── Atributos, Constructor, Getters, Setters y toString ────────────────────────────────────
+/**
+ * Representa al administrador del parque Tech-Park UQ.
+ * Puede gestionar empleados, zonas, atracciones y consultar reportes.
+ */
 public class Administrador {
+
     private String id;
     private String nombre;
     private String documento;
-    private String claveAcceso;
+    private String passwordHash;   // contraseña de acceso al panel de administración
+
+    // ── Constructores ──────────────────────────────────────────────────
 
     public Administrador() {}
 
-    public Administrador(String id, String nombre, String documento, String claveAcceso) {
+    public Administrador(String id, String nombre, String documento, String passwordHash) {
         this.id          = id;
         this.nombre      = nombre;
         this.documento   = documento;
-        this.claveAcceso = claveAcceso;
+        this.passwordHash = passwordHash;
     }
 
-    public String getId() {
-        return id;
+    // ── Métodos de negocio (firmas) ────────────────────────────────────
+
+    /** Verifica la clave de acceso. */
+    public boolean autenticar(String clave) {
+        return this.passwordHash != null && this.passwordHash.equals(clave);
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+    // ── Getters / Setters ──────────────────────────────────────────────
 
-    public String getNombre() {
-        return nombre;
-    }
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
 
-    public String getDocumento() {
-        return documento;
-    }
+    public String getDocumento() { return documento; }
+    public void setDocumento(String documento) { this.documento = documento; }
 
-    public void setDocumento(String documento) {
-        this.documento = documento;
-    }
-
-    public String getClaveAcceso() {
-        return claveAcceso;
-    }
-
-    public void setClaveAcceso(String claveAcceso) {
-        this.claveAcceso = claveAcceso;
-    }
+    public String getPasswordHash() { return passwordHash; }
+    public void setPasswordHash(String passwordHash) { this.passwordHash = passwordHash; }
 
     @Override
     public String toString() {
         return "Administrador{id='" + id + "', nombre='" + nombre + "'}";
-    }
-
-    // ── Métodos de negocio (firmas) ────────────────────────────────────
-    /** Verifica la clave de acceso. */
-    public boolean autenticar(String clave) {
-        return this.claveAcceso != null && this.claveAcceso.equals(clave);
     }
 }

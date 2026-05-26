@@ -1,10 +1,15 @@
-package main.java.com.techparck.model;
+package com.techpark.model;
 
+/**
+ * Clasificación de las atracciones del parque.
+ * Las atracciones ACUATICA y MECANICA_ALTURA se cierran automáticamente
+ * ante alertas de tormenta eléctrica o lluvia fuerte.
+ */
 public enum TipoAtraccion {
-    ACUATICA, 
+    ACUATICA,
     MECANICA_ALTURA,
-    MECACNICA_SUELO,
+    MECANICA_SUELO,
     SHOW,
-    FAMILIAR, 
+    FAMILIAR,
     OTRO
 }
