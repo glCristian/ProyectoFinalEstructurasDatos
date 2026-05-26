@@ -1,6 +1,7 @@
-package main.java.com.techparck.controller;
+package com.techpark.controller;
 
 import com.google.gson.Gson;
+import com.techpark.util.JsonConfig;
 import com.techpark.model.Zona;
 import com.techpark.service.ParqueService;
 import io.javalin.Javalin;
@@ -8,8 +9,9 @@ import io.javalin.Javalin;
 import java.util.Map;
 
 public class ZonaController {
+
     private final ParqueService parqueService = ParqueService.getInstance();
-    private final Gson gson = new Gson();
+    private static final Gson gson = JsonConfig.GSON;
 
     public void registrarRutas(Javalin app) {
 
@@ -35,6 +37,24 @@ public class ZonaController {
             );
             boolean ok = parqueService.agregarZona(z);
             ctx.status(ok ? 201 : 409).result(ok ? "Zona creada" : "ID duplicado");
+        });
+
+        // PUT /zonas/{id} → actualizar zona
+        app.put("/zonas/{id}", ctx -> {
+            Zona z = parqueService.getZona(ctx.pathParam("id"));
+            if (z == null) { ctx.status(404).result("Zona no encontrada"); return; }
+            @SuppressWarnings("unchecked")
+            Map<String, Object> body = gson.fromJson(ctx.body(), Map.class);
+
+            if (body.containsKey("nombre")) {
+                String nombre = (String) body.get("nombre");
+                if (nombre != null && !nombre.isBlank()) z.setNombre(nombre);
+            }
+            if (body.containsKey("capacidadMaxima")) {
+                z.setCapacidadMaxima(((Number) body.get("capacidadMaxima")).intValue());
+            }
+
+            ctx.result("Zona actualizada");
         });
 
         // DELETE /zonas/{id}

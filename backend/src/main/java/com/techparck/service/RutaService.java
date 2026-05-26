@@ -1,11 +1,19 @@
-package main.java.com.techparck.service;
+package com.techpark.service;
+
+import com.techpark.structures.Grafo;
+
+import java.util.List;
+import java.util.Map;
+import java.util.LinkedHashMap;
+import java.util.Set;
+import java.util.HashSet;
 
 /**
  * Servicio de gestión de rutas del parque.
  * Ejecuta Dijkstra y BFS sobre el grafo de atracciones.
  */
-
 public class RutaService {
+
     private final ParqueService parqueService;
 
     public RutaService(ParqueService parqueService) {
@@ -55,9 +63,27 @@ public class RutaService {
     public Map<String, Object> obtenerGrafoParaVista() {
         Grafo grafo = parqueService.getGrafo();
         Map<String, Object> resultado = new LinkedHashMap<>();
+        Map<String, com.techpark.model.Atraccion> atracciones = new LinkedHashMap<>();
+
+        for (com.techpark.model.Atraccion atraccion : parqueService.getAtracciones()) {
+            atracciones.put(atraccion.getId(), atraccion);
+        }
 
         // Nodos
-        resultado.put("nodos", grafo.getNodos());
+        java.util.List<Map<String, Object>> nodos = new java.util.ArrayList<>();
+        for (String id : grafo.getNodos()) {
+            com.techpark.model.Atraccion atraccion = atracciones.get(id);
+            Map<String, Object> nodo = new LinkedHashMap<>();
+            nodo.put("id", id);
+            if (atraccion != null) {
+                nodo.put("nombre", atraccion.getNombre());
+                nodo.put("estado", atraccion.getEstado());
+                nodo.put("posicionX", atraccion.getPosicionX());
+                nodo.put("posicionY", atraccion.getPosicionY());
+            }
+            nodos.add(nodo);
+        }
+        resultado.put("nodos", nodos);
 
         // Aristas (sin duplicados)
         java.util.List<Map<String, Object>> aristas = new java.util.ArrayList<>();
@@ -79,5 +105,23 @@ public class RutaService {
         }
         resultado.put("aristas", aristas);
         return resultado;
-    }    
+    }
+
+    /**
+     * Detecta clústeres (componentes conectados) del grafo usando BFS.
+     */
+    public Map<String, List<String>> detectarClusters() {
+        Set<String> visitados = new HashSet<>();
+        Map<String, List<String>> clusters = new LinkedHashMap<>();
+        int numCluster = 1;
+
+        for (String nodo : parqueService.getGrafo().getNodos()) {
+            if (!visitados.contains(nodo)) {
+                List<String> componente = parqueService.getGrafo().bfs(nodo);
+                visitados.addAll(componente);
+                clusters.put("Clúster " + numCluster++, componente);
+            }
+        }
+        return clusters;
+    }
 }

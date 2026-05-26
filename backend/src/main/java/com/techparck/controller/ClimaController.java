@@ -1,7 +1,8 @@
-package main.java.com.techparck.controller;
+package com.techpark.controller;
 
 import com.google.gson.Gson;
-import main.java.com.techpark.service.ParqueService;
+import com.techpark.util.JsonConfig;
+import com.techpark.service.ParqueService;
 import io.javalin.Javalin;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.Map;
 public class ClimaController {
 
     private final ParqueService parqueService = ParqueService.getInstance();
-    private final Gson gson = new Gson();
+    private static final Gson gson = JsonConfig.GSON;
 
     public void registrarRutas(Javalin app) {
 
@@ -20,11 +21,7 @@ public class ClimaController {
                 "alertaActiva", parqueService.isAlertaClimatica(),
                 "tipoAlerta",   parqueService.getTipoAlerta()
             ))));
-        // DELETE /clima/alerta → desactivar alerta climática
-        app.delete("/clima/alerta", ctx -> {
-            parqueService.desactivarAlertaClimatica();
-            ctx.result("Alerta climática desactivada");
-        });
+
         // POST /clima/alerta → activar alerta climática
         // Body: { "tipo": "TORMENTA_ELECTRICA" | "LLUVIA_FUERTE" }
         app.post("/clima/alerta", ctx -> {
@@ -37,7 +34,11 @@ public class ClimaController {
                 "cerradas",  cerradas
             )));
         });
+
+        // DELETE /clima/alerta → desactivar alerta climática
+        app.delete("/clima/alerta", ctx -> {
+            parqueService.desactivarAlertaClimatica();
+            ctx.result("Alerta climática desactivada");
+        });
     }
 }
-
-

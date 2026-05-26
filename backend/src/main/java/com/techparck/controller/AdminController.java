@@ -1,6 +1,7 @@
-package main.java.com.techparck.controller;
+package com.techpark.controller;
 
 import com.google.gson.Gson;
+import com.techpark.util.JsonConfig;
 import com.techpark.service.CargaDatosService;
 import com.techpark.service.ParqueService;
 import io.javalin.Javalin;
@@ -8,9 +9,10 @@ import io.javalin.Javalin;
 import java.util.Map;
 
 public class AdminController {
+
     private final ParqueService    parqueService    = ParqueService.getInstance();
     private final CargaDatosService cargaDatosService = new CargaDatosService(parqueService);
-    private final Gson gson = new Gson();
+    private static final Gson gson = JsonConfig.GSON;
 
     public void registrarRutas(Javalin app) {
 
@@ -26,7 +28,7 @@ public class AdminController {
 
         // GET /admin/reportes/cierres-clima
         app.get("/admin/reportes/cierres-clima", ctx ->
-            ctx.json(gson.toJson(parqueService.atraccionesCerradasPorClima())));
+            ctx.json(gson.toJson(parqueService.getHistorialCierresClima())));
 
         // GET /admin/reportes/ingreso-diario
         app.get("/admin/reportes/ingreso-diario", ctx ->

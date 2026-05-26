@@ -1,17 +1,18 @@
-package main.java.com.techparck.controller;
+package com.techpark.controller;
 
 import com.google.gson.Gson;
+import com.techpark.util.JsonConfig;
 import com.techpark.model.Atraccion;
 import com.techpark.model.EstadoAtraccion;
-import com.techpark.model.TipoAtraccion;
 import com.techpark.service.ParqueService;
 import io.javalin.Javalin;
 
 import java.util.Map;
 
 public class AtraccionController {
+
     private final ParqueService parqueService = ParqueService.getInstance();
-    private final Gson gson = new Gson();
+    private static final Gson gson = JsonConfig.GSON;
 
     public void registrarRutas(Javalin app) {
 
@@ -59,6 +60,19 @@ public class AtraccionController {
             }
         });
 
+        // PUT /atracciones/{id} → actualizar datos generales
+        app.put("/atracciones/{id}", ctx -> {
+            String id = ctx.pathParam("id");
+            @SuppressWarnings("unchecked")
+            Map<String, Object> body = gson.fromJson(ctx.body(), Map.class);
+            try {
+                boolean ok = parqueService.actualizarAtraccion(id, body);
+                ctx.status(ok ? 200 : 404).result(ok ? "Atracción actualizada" : "Atracción no encontrada");
+            } catch (Exception e) {
+                ctx.status(400).result("Datos inválidos: " + e.getMessage());
+            }
+        });
+
         // PUT /atracciones/{id}/revision → registrar revisión técnica
         app.put("/atracciones/{id}/revision", ctx -> {
             String id = ctx.pathParam("id");
@@ -79,5 +93,5 @@ public class AtraccionController {
             int t = parqueService.tamanioCola(ctx.pathParam("id"));
             ctx.json(gson.toJson(Map.of("atraccionId", ctx.pathParam("id"), "tamanioCola", t)));
         });
-    }    
+    }
 }
