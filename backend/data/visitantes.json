@@ -35,10 +35,13 @@
       "cabeza": {
         "dato": "A4",
         "siguiente": {
-          "dato": "A3"
+          "dato": "A3",
+          "siguiente": {
+            "dato": "A2"
+          }
         }
       },
-      "tamanio": 2
+      "tamanio": 3
     },
     "favoritos": {
       "tabla": [
@@ -94,6 +97,514 @@
       "fechaCompra": "2026-05-25T11:51:30.969405329"
     },
     "puedeDentrar": true,
+    "numeroPersonasFamilia": 1,
+    "historialVisitas": {
+      "tamanio": 0
+    },
+    "favoritos": {
+      "tabla": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "tamanio": 0,
+      "capacidad": 16
+    }
+  },
+  {
+    "id": "usuario1",
+    "nombre": "Sofia Ramirez",
+    "documento": "201001",
+    "edad": 22,
+    "altura": 1.65,
+    "username": "usuario1",
+    "passwordHash": "a0ccddd9e5ddd2617e88f6515a2998f0119b6e99fd2bfef049550ad983af9fa0",
+    "saldoVirtual": 112000.0,
+    "ticketComprado": {
+      "id": "T-usuario1",
+      "tipo": "GENERAL",
+      "visitanteId": "usuario1",
+      "fechaEmision": "2026-05-25",
+      "fechaVencimiento": "2026-05-25",
+      "activo": true,
+      "precio": 40000.0,
+      "numeroPersonasIncluidas": 1,
+      "miembrosDeLaFamilia": [
+        {
+          "id": "usuario1",
+          "nombre": "Sofia Ramirez",
+          "documento": "201001",
+          "edad": 22,
+          "altura": 1.65
+        }
+      ],
+      "precioCompra": 40000.0,
+      "fechaCompra": "2026-05-25T09:10"
+    },
+    "puedeDentrar": true,
+    "numeroPersonasFamilia": 1,
+    "historialVisitas": {
+      "cabeza": {
+        "dato": "A1",
+        "siguiente": {
+          "dato": "A6",
+          "siguiente": {
+            "dato": "A3"
+          }
+        }
+      },
+      "tamanio": 3
+    },
+    "favoritos": {
+      "tabla": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "tamanio": 0,
+      "capacidad": 16
+    }
+  },
+  {
+    "id": "usuario2",
+    "nombre": "Daniel Torres",
+    "documento": "201002",
+    "edad": 19,
+    "altura": 1.78,
+    "username": "usuario2",
+    "passwordHash": "534063df44e5903915d9ae79265073e51d5f21950b3af1102029378cce270f8a",
+    "saldoVirtual": 95000.0,
+    "ticketComprado": {
+      "id": "T-usuario2",
+      "tipo": "FAST_PASS",
+      "visitanteId": "usuario2",
+      "fechaEmision": "2026-05-25",
+      "fechaVencimiento": "2026-05-25",
+      "activo": true,
+      "precio": 65000.0,
+      "numeroPersonasIncluidas": 1,
+      "miembrosDeLaFamilia": [
+        {
+          "id": "usuario2",
+          "nombre": "Daniel Torres",
+          "documento": "201002",
+          "edad": 19,
+          "altura": 1.78
+        }
+      ],
+      "precioCompra": 65000.0,
+      "fechaCompra": "2026-05-25T09:35"
+    },
+    "puedeDentrar": true,
+    "numeroPersonasFamilia": 1,
+    "historialVisitas": {
+      "cabeza": {
+        "dato": "A3",
+        "siguiente": {
+          "dato": "A3"
+        }
+      },
+      "tamanio": 2
+    },
+    "favoritos": {
+      "tabla": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "tamanio": 0,
+      "capacidad": 16
+    }
+  },
+  {
+    "id": "usuario3",
+    "nombre": "Valentina Rojas",
+    "documento": "201003",
+    "edad": 15,
+    "altura": 1.58,
+    "username": "usuario3",
+    "passwordHash": "15676680ffc67a48761517e72a60827e471fb3ce472862592ed25ce6a7e63a74",
+    "saldoVirtual": 132000.0,
+    "ticketComprado": {
+      "id": "T-usuario3",
+      "tipo": "GENERAL",
+      "visitanteId": "usuario3",
+      "fechaEmision": "2026-05-26",
+      "fechaVencimiento": "2026-05-26",
+      "activo": true,
+      "precio": 40000.0,
+      "numeroPersonasIncluidas": 1,
+      "miembrosDeLaFamilia": [
+        {
+          "id": "usuario3",
+          "nombre": "Valentina Rojas",
+          "documento": "201003",
+          "edad": 15,
+          "altura": 1.58
+        }
+      ],
+      "precioCompra": 40000.0,
+      "fechaCompra": "2026-05-26T00:01:02.548084660"
+    },
+    "puedeDentrar": true,
+    "numeroPersonasFamilia": 1,
+    "historialVisitas": {
+      "cabeza": {
+        "dato": "A3"
+      },
+      "tamanio": 1
+    },
+    "favoritos": {
+      "tabla": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "tamanio": 0,
+      "capacidad": 16
+    }
+  },
+  {
+    "id": "usuario4",
+    "nombre": "Mateo Castillo",
+    "documento": "201004",
+    "edad": 8,
+    "altura": 1.35,
+    "username": "usuario4",
+    "passwordHash": "47b85ca8f181024f909d10f416bc436563109f4cc9106fc6c4e28398118c9f8e",
+    "saldoVirtual": 70000.0,
+    "puedeDentrar": false,
+    "numeroPersonasFamilia": 1,
+    "historialVisitas": {
+      "tamanio": 0
+    },
+    "favoritos": {
+      "tabla": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "tamanio": 0,
+      "capacidad": 16
+    }
+  },
+  {
+    "id": "usuario5",
+    "nombre": "Lucia Herrera",
+    "documento": "201005",
+    "edad": 27,
+    "altura": 1.62,
+    "username": "usuario5",
+    "passwordHash": "1a87d3b9b8ec79a0444cb5aa4988fa64966c469579888dc5eb385eeb2071bc81",
+    "saldoVirtual": 210000.0,
+    "puedeDentrar": false,
+    "numeroPersonasFamilia": 1,
+    "historialVisitas": {
+      "cabeza": {
+        "dato": "A2",
+        "siguiente": {
+          "dato": "A7"
+        }
+      },
+      "tamanio": 2
+    },
+    "favoritos": {
+      "tabla": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "tamanio": 0,
+      "capacidad": 16
+    }
+  },
+  {
+    "id": "usuario6",
+    "nombre": "Andres Molina",
+    "documento": "201006",
+    "edad": 31,
+    "altura": 1.8,
+    "username": "usuario6",
+    "passwordHash": "5c9b3723b4112067d763f485f00b0ba1a50d5d6333a53ab0693377bb50833ebd",
+    "saldoVirtual": 100000.0,
+    "puedeDentrar": false,
+    "numeroPersonasFamilia": 1,
+    "historialVisitas": {
+      "tamanio": 0
+    },
+    "favoritos": {
+      "tabla": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "tamanio": 0,
+      "capacidad": 16
+    }
+  },
+  {
+    "id": "usuario7",
+    "nombre": "Camila Vega",
+    "documento": "201007",
+    "edad": 24,
+    "altura": 1.7,
+    "username": "usuario7",
+    "passwordHash": "40492b43829c8c460ca813b518de536d75f985c5e9f586227135cb8beb8b97b0",
+    "saldoVirtual": 80000.0,
+    "ticketComprado": {
+      "id": "T-usuario7",
+      "tipo": "GENERAL",
+      "visitanteId": "usuario7",
+      "fechaEmision": "2026-05-25",
+      "fechaVencimiento": "2026-05-25",
+      "activo": true,
+      "precio": 40000.0,
+      "numeroPersonasIncluidas": 1,
+      "miembrosDeLaFamilia": [
+        {
+          "id": "usuario7",
+          "nombre": "Camila Vega",
+          "documento": "201007",
+          "edad": 24,
+          "altura": 1.7
+        }
+      ],
+      "precioCompra": 40000.0,
+      "fechaCompra": "2026-05-25T10:05"
+    },
+    "puedeDentrar": true,
+    "numeroPersonasFamilia": 1,
+    "historialVisitas": {
+      "cabeza": {
+        "dato": "A5"
+      },
+      "tamanio": 1
+    },
+    "favoritos": {
+      "tabla": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "tamanio": 0,
+      "capacidad": 16
+    }
+  },
+  {
+    "id": "usuario8",
+    "nombre": "Nicolas Gutierrez",
+    "documento": "201008",
+    "edad": 12,
+    "altura": 1.42,
+    "username": "usuario8",
+    "passwordHash": "4ce26c492172468182a828d063d6a2178b37e3e68269f0cd31b65ca490837a13",
+    "saldoVirtual": 90000.0,
+    "puedeDentrar": false,
+    "numeroPersonasFamilia": 1,
+    "historialVisitas": {
+      "tamanio": 0
+    },
+    "favoritos": {
+      "tabla": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "tamanio": 0,
+      "capacidad": 16
+    }
+  },
+  {
+    "id": "usuario9",
+    "nombre": "Paula Fernandez",
+    "documento": "201009",
+    "edad": 18,
+    "altura": 1.6,
+    "username": "usuario9",
+    "passwordHash": "5634120b9a559dabb406487aaa55752303cb4267864c06138a564337fe5ceecd",
+    "saldoVirtual": 170000.0,
+    "ticketComprado": {
+      "id": "T-usuario9",
+      "tipo": "FAST_PASS",
+      "visitanteId": "usuario9",
+      "fechaEmision": "2026-05-25",
+      "fechaVencimiento": "2026-05-25",
+      "activo": true,
+      "precio": 65000.0,
+      "numeroPersonasIncluidas": 1,
+      "miembrosDeLaFamilia": [
+        {
+          "id": "usuario9",
+          "nombre": "Paula Fernandez",
+          "documento": "201009",
+          "edad": 18,
+          "altura": 1.6
+        }
+      ],
+      "precioCompra": 65000.0,
+      "fechaCompra": "2026-05-25T10:20"
+    },
+    "puedeDentrar": true,
+    "numeroPersonasFamilia": 1,
+    "historialVisitas": {
+      "cabeza": {
+        "dato": "A7",
+        "siguiente": {
+          "dato": "A8"
+        }
+      },
+      "tamanio": 2
+    },
+    "favoritos": {
+      "tabla": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "tamanio": 0,
+      "capacidad": 16
+    }
+  },
+  {
+    "id": "usuario10",
+    "nombre": "Julian Ortiz",
+    "documento": "201010",
+    "edad": 35,
+    "altura": 1.75,
+    "username": "usuario10",
+    "passwordHash": "e94a5436206216887504a53ec1b8a9c2995f5149ca76e31afb9b44335eb18487",
+    "saldoVirtual": 50000.0,
+    "puedeDentrar": false,
     "numeroPersonasFamilia": 1,
     "historialVisitas": {
       "tamanio": 0

@@ -27,7 +27,8 @@ public class Atraccion {
     private String motivoCierre;       // se registra cuando estado != ACTIVA
 
     // ── Métricas ───────────────────────────────────────────────────────
-    private int visitantesAcumulados;  // se bloquea a >= 500
+    private int visitantesAcumulados;  // total de visitantes atendidos acumulado
+    private int ciclosCompletados;      // se bloquea a >= 500
     private double tiempoEsperaEstimado; // en minutos
     private int incidentesOperativos;
 
@@ -59,6 +60,7 @@ public class Atraccion {
         this.zonaId                = zonaId;
         this.estado                = EstadoAtraccion.ACTIVA;
         this.visitantesAcumulados  = 0;
+        this.ciclosCompletados     = 0;
         this.tiempoEsperaEstimado  = 0.0;
         this.incidentesOperativos  = 0;
         this.conexiones            = new ArrayList<>();
@@ -99,20 +101,33 @@ public class Atraccion {
 
     // ── Métodos de negocio (firmas) ────────────────────────────────────
 
-    /** Incrementa el contador de visitantes y aplica mantenimiento si >= 500. */
-    public boolean registrarVisitante() {
-        visitantesAcumulados++;
-        if (visitantesAcumulados >= 500) {
+    /**
+     * Registra un ciclo completo de la atracción.
+     * El mantenimiento se dispara por ciclos, no por persona atendida.
+     */
+    public boolean registrarCiclo(int visitantesAtendidos) {
+        ciclosCompletados++;
+        if (visitantesAtendidos > 0) {
+            visitantesAcumulados += visitantesAtendidos;
+        }
+
+        if (ciclosCompletados >= 500) {
             estado = EstadoAtraccion.EN_MANTENIMIENTO;
-            motivoCierre = "Mantenimiento preventivo: límite de 500 visitantes alcanzado";
+            motivoCierre = "Mantenimiento preventivo: límite de 500 ciclos alcanzado";
             return true; // indica que se activó mantenimiento
         }
         return false;
     }
 
+    /** Compatibilidad con código previo: registra un ciclo con un visitante. */
+    @Deprecated
+    public boolean registrarVisitante() {
+        return registrarCiclo(1);
+    }
+
     /** Registra una revisión técnica y reactiva la atracción. */
     public void registrarRevisionTecnica() {
-        this.visitantesAcumulados = 0;
+        this.ciclosCompletados = 0;
         this.estado = EstadoAtraccion.ACTIVA;
         this.motivoCierre = null;
     }
@@ -165,6 +180,9 @@ public class Atraccion {
 
     public int getVisitantesAcumulados() { return visitantesAcumulados; }
     public void setVisitantesAcumulados(int visitantesAcumulados) { this.visitantesAcumulados = visitantesAcumulados; }
+
+    public int getCiclosCompletados() { return ciclosCompletados; }
+    public void setCiclosCompletados(int ciclosCompletados) { this.ciclosCompletados = ciclosCompletados; }
 
     public double getTiempoEsperaEstimado() { return tiempoEsperaEstimado; }
     public void setTiempoEsperaEstimado(double tiempoEsperaEstimado) { this.tiempoEsperaEstimado = tiempoEsperaEstimado; }

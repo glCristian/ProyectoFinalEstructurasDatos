@@ -528,14 +528,15 @@ public class ParqueService {
         }
 
         for (Visitante v : lote) {
-            boolean mantenimiento = a.registrarVisitante();
             v.registrarVisita(atraccionId);
-            if (mantenimiento) {
-                // notificar (aquí solo se registra; la GUI debe consultarlo)
-                System.out.println("[ALERTA] Atracción " + a.getNombre() + " entra en mantenimiento preventivo.");
-                notificarColaAtraccion(atraccionId,
-                    "La atracción " + a.getNombre() + " entra en mantenimiento preventivo.");
-            }
+        }
+
+        boolean mantenimiento = a.registrarCiclo(lote.size());
+        if (mantenimiento) {
+            // notificar (aquí solo se registra; la GUI debe consultarlo)
+            System.out.println("[ALERTA] Atracción " + a.getNombre() + " entra en mantenimiento preventivo.");
+            notificarColaAtraccion(atraccionId,
+                "La atracción " + a.getNombre() + " entra en mantenimiento preventivo.");
         }
 
         actualizarTiempoEspera(atraccionId);
@@ -812,10 +813,10 @@ public class ParqueService {
     //  REPORTES
     // ────────────────────────────────────────────────────────────────
 
-    /** Retorna las atracciones con más visitantes acumulados (top N). */
+    /** Retorna las atracciones con más ciclos completados (top N). */
     public List<Atraccion> topAtracciones(int n) {
         List<Atraccion> lista = new ArrayList<>(atracciones.values());
-        lista.sort((a, b) -> Integer.compare(b.getVisitantesAcumulados(), a.getVisitantesAcumulados()));
+        lista.sort((a, b) -> Integer.compare(b.getCiclosCompletados(), a.getCiclosCompletados()));
         return lista.subList(0, Math.min(n, lista.size()));
     }
 

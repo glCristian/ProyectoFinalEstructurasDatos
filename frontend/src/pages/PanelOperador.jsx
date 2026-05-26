@@ -136,7 +136,7 @@ export default function PanelOperador() {
                   </div>
 
                   <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>
-                    Capacidad/ciclo: {a.capacidadMaximaPorCiclo ?? '—'} · Ciclos: {a.visitantesAcumulados ?? 0} / 500
+                    Capacidad/ciclo: {a.capacidadMaximaPorCiclo ?? '—'} · Ciclos: {a.ciclosCompletados ?? 0} / 500
                   </div>
 
                   {a.motivoCierre && a.estado !== 'ACTIVA' && (

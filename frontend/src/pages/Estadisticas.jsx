@@ -105,12 +105,12 @@ export default function Estadisticas() {
 
       {/* Top atracciones */}
       <TablaEstadisticas
-        titulo="🏆 TOP ATRACCIONES — MÁS VISITADAS"
+        titulo="🏆 TOP ATRACCIONES — MÁS CICLOS COMPLETADOS"
         columnas={[
           { key: 'id',                    label: 'ID' },
           { key: 'nombre',                label: 'Atracción' },
           { key: 'tipo',                  label: 'Tipo', render: v => v?.replace('_',' ') },
-          { key: 'visitantesAcumulados',  label: 'Visitantes' },
+          { key: 'ciclosCompletados',     label: 'Ciclos completados' },
           { key: 'tiempoEsperaEstimado',  label: 'Espera (min)', render: v => v > 0 ? `${v} min` : '—' },
           { key: 'estado',                label: 'Estado', render: v => badgeEstado(v) },
         ]}
@@ -124,7 +124,7 @@ export default function Estadisticas() {
         columnas={[
           { key: 'id',                   label: 'ID' },
           { key: 'nombre',               label: 'Atracción' },
-          { key: 'visitantesAcumulados', label: 'Visitantes acum.' },
+          { key: 'ciclosCompletados',    label: 'Ciclos completados' },
           { key: 'motivoCierre',         label: 'Motivo', render: v => v ?? '—' },
           { key: 'zonaId',               label: 'Zona' },
         ]}
@@ -158,7 +158,7 @@ export default function Estadisticas() {
           { key: 'capacidadMaximaPorCiclo', label: 'Cap./ciclo' },
           { key: 'alturaMinima',          label: 'Alt. mín', render: v => v > 0 ? `${v} m` : '—' },
           { key: 'costoAdicional',        label: 'Costo adicional', render: v => v > 0 ? fmtPeso(v) : '—' },
-          { key: 'visitantesAcumulados',  label: 'Visitantes' },
+          { key: 'ciclosCompletados',     label: 'Ciclos completados' },
           { key: 'incidentesOperativos',  label: 'Incidentes' },
           { key: 'estado',                label: 'Estado', render: v => badgeEstado(v) },
         ]}

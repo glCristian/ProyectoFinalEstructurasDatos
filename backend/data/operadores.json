@@ -3,7 +3,7 @@
     "id": "OP1",
     "nombre": "Juan Perez",
     "documento": "222222",
-    "zonaAsignadaId": "Z2",
+    "zonaAsignadaId": "Z1",
     "activo": true,
     "username": "operador1",
     "passwordHash": "27efbda024c402f6b212509eeba68215783b0c2455ef01e27dddfa8fc6525a65"
@@ -12,18 +12,27 @@
     "id": "OP2",
     "nombre": "Maria Lopez",
     "documento": "333333",
-    "zonaAsignadaId": "Z1",
+    "zonaAsignadaId": "Z2",
     "activo": true,
     "username": "operador2",
     "passwordHash": "7d11fe38405a1d5b59a732afce66e2a061ad663baacd2fe976e1f3b2417dd023"
   },
   {
-    "id": "0001",
-    "nombre": "camila",
-    "documento": "0001",
-    "zonaAsignadaId": "Z4",
+    "id": "OP3",
+    "nombre": "Camila Torres",
+    "documento": "444444",
+    "zonaAsignadaId": "Z3",
     "activo": true,
     "username": "operador3",
     "passwordHash": "04ba1f6aa84b8b7f8a2ff3a9158dc4c6a99a598a38fc9bb479cb6d59876ee810"
+  },
+  {
+    "id": "OP4",
+    "nombre": "Andres Ruiz",
+    "documento": "555555",
+    "zonaAsignadaId": "Z4",
+    "activo": true,
+    "username": "operador4",
+    "passwordHash": "a73df1d862eed89a43ae1dd18534aa6e7fdc314103745287579cbf8599d3aa6e"
   }
 ]

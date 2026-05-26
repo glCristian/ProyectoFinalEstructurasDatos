@@ -15,12 +15,9 @@
     },
     "idsOperadores": {
       "cabeza": {
-        "dato": "OP1",
-        "siguiente": {
-          "dato": "OP2"
-        }
+        "dato": "OP1"
       },
-      "tamanio": 2
+      "tamanio": 1
     }
   },
   {
@@ -39,12 +36,9 @@
     },
     "idsOperadores": {
       "cabeza": {
-        "dato": "OP2",
-        "siguiente": {
-          "dato": "OP1"
-        }
+        "dato": "OP2"
       },
-      "tamanio": 2
+      "tamanio": 1
     }
   },
   {
@@ -84,12 +78,9 @@
     },
     "idsOperadores": {
       "cabeza": {
-        "dato": "OP4",
-        "siguiente": {
-          "dato": "0001"
-        }
+        "dato": "OP4"
       },
-      "tamanio": 2
+      "tamanio": 1
     }
   }
 ]

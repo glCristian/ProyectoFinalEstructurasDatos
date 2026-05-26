@@ -144,14 +144,14 @@ public class CargaDatosService {
         parqueService.agregarZona(new Zona("Z4", "Zona Shows",       500));
 
         // ── Atracciones ───────────────────────────────────────────────
-        agregarAtraccionConZona("A1", "Tobogán Extremo",   TipoAtraccion.ACUATICA,        20, 1.40, 12, 0.0,  "Z1");
-        agregarAtraccionConZona("A2", "Ola Gigante",       TipoAtraccion.ACUATICA,        30, 1.20, 10, 5000, "Z1");
-        agregarAtraccionConZona("A3", "Montaña Rusa",      TipoAtraccion.MECANICA_ALTURA, 24, 1.45, 14, 8000, "Z2");
-        agregarAtraccionConZona("A4", "Caída Libre",       TipoAtraccion.MECANICA_ALTURA, 12, 1.50, 16, 10000,"Z2");
-        agregarAtraccionConZona("A5", "Carros Chocones",   TipoAtraccion.MECANICA_SUELO,  16, 1.10,  8, 3000, "Z3");
-        agregarAtraccionConZona("A6", "Carrusel Mágico",   TipoAtraccion.FAMILIAR,        20, 0.80,  4, 0.0,  "Z3");
-        agregarAtraccionConZona("A7", "Show Láser",        TipoAtraccion.SHOW,            200,0.0,   0, 0.0,  "Z4");
-        agregarAtraccionConZona("A8", "Teatro Acuático",   TipoAtraccion.SHOW,            150,0.0,   0, 5000, "Z4");
+        agregarAtraccionConZona("A1", "Tobogán Extremo",   TipoAtraccion.ACUATICA,        20, 1.40, 12, 0.0,  "Z1", 498);
+        agregarAtraccionConZona("A2", "Ola Gigante",       TipoAtraccion.ACUATICA,        30, 1.20, 10, 5000, "Z1", 499);
+        agregarAtraccionConZona("A3", "Montaña Rusa",      TipoAtraccion.MECANICA_ALTURA, 24, 1.45, 14, 8000, "Z2", 497);
+        agregarAtraccionConZona("A4", "Caída Libre",       TipoAtraccion.MECANICA_ALTURA, 12, 1.50, 16, 10000,"Z2", 499);
+        agregarAtraccionConZona("A5", "Carros Chocones",   TipoAtraccion.MECANICA_SUELO,  16, 1.10,  8, 3000, "Z3", 498);
+        agregarAtraccionConZona("A6", "Carrusel Mágico",   TipoAtraccion.FAMILIAR,        20, 0.80,  4, 0.0,  "Z3", 497);
+        agregarAtraccionConZona("A7", "Show Láser",        TipoAtraccion.SHOW,            200,0.0,   0, 0.0,  "Z4", 499);
+        agregarAtraccionConZona("A8", "Teatro Acuático",   TipoAtraccion.SHOW,            150,0.0,   0, 5000, "Z4", 498);
 
         // ── Conexiones del grafo ──────────────────────────────────────
         parqueService.conectarAtracciones("A1", "A2", 50);
@@ -211,8 +211,9 @@ public class CargaDatosService {
 
     private void agregarAtraccionConZona(String id, String nombre, TipoAtraccion tipo,
                                           int cap, double altMin, int edadMin,
-                                          double costo, String zonaId) {
+                                          double costo, String zonaId, int ciclosCompletados) {
         Atraccion a = new Atraccion(id, nombre, tipo, cap, altMin, edadMin, costo, zonaId);
+        a.setCiclosCompletados(ciclosCompletados);
         parqueService.agregarAtraccion(a);
         Zona z = parqueService.getZona(zonaId);
         if (z != null) z.agregarAtraccion(id);

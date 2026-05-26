@@ -1,1 +1,34 @@
-[]
+[
+  {
+    "atraccionId": "A1",
+    "atraccionNombre": "Tobogán Extremo",
+    "tipoAtraccion": "ACUATICA",
+    "tipoAlerta": "TORMENTA_ELECTRICA",
+    "motivoCierre": "Cierre por alerta climática: TORMENTA_ELECTRICA",
+    "fechaCierre": "2026-05-26T00:04:12.093430174"
+  },
+  {
+    "atraccionId": "A2",
+    "atraccionNombre": "Ola Gigante",
+    "tipoAtraccion": "ACUATICA",
+    "tipoAlerta": "TORMENTA_ELECTRICA",
+    "motivoCierre": "Cierre por alerta climática: TORMENTA_ELECTRICA",
+    "fechaCierre": "2026-05-26T00:04:12.094276782"
+  },
+  {
+    "atraccionId": "A3",
+    "atraccionNombre": "Montaña Rusa",
+    "tipoAtraccion": "MECANICA_ALTURA",
+    "tipoAlerta": "TORMENTA_ELECTRICA",
+    "motivoCierre": "Cierre por alerta climática: TORMENTA_ELECTRICA",
+    "fechaCierre": "2026-05-26T00:04:12.094317337"
+  },
+  {
+    "atraccionId": "A4",
+    "atraccionNombre": "Caída Libre",
+    "tipoAtraccion": "MECANICA_ALTURA",
+    "tipoAlerta": "TORMENTA_ELECTRICA",
+    "motivoCierre": "Cierre por alerta climática: TORMENTA_ELECTRICA",
+    "fechaCierre": "2026-05-26T00:04:12.094342370"
+  }
+]
