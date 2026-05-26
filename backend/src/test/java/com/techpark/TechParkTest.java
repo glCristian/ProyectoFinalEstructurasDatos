@@ -126,4 +126,26 @@ public class TechParkTest {
         grafo.agregarNodo("AISLADO");
         assertFalse(grafo.estanConectados("A1", "AISLADO"));
     }
+
+    @Test @Order(6)
+    @DisplayName("Atraccion: mantenimiento automático al alcanzar 500 visitantes")
+    void testMantenimientoPreventivo() {
+        Atraccion a = new Atraccion("T1", "Test", TipoAtraccion.MECANICA_SUELO,
+                                    10, 1.0, 5, 0, "Z1");
+        assertEquals(EstadoAtraccion.ACTIVA, a.getEstado());
+
+        // Simular 499 visitantes: no debe cambiar a mantenimiento
+        for (int i = 0; i < 499; i++) a.registrarVisitante();
+        assertEquals(EstadoAtraccion.ACTIVA, a.getEstado());
+
+        // Visitante 500 → activa mantenimiento
+        boolean mantenimiento = a.registrarVisitante();
+        assertTrue(mantenimiento);
+        assertEquals(EstadoAtraccion.EN_MANTENIMIENTO, a.getEstado());
+
+        // Revisión técnica → vuelve a ACTIVA con contador en 0
+        a.registrarRevisionTecnica();
+        assertEquals(EstadoAtraccion.ACTIVA, a.getEstado());
+        assertEquals(0, a.getVisitantesAcumulados());
+    }
 }
