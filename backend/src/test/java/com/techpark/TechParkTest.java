@@ -148,4 +148,31 @@ public class TechParkTest {
         assertEquals(EstadoAtraccion.ACTIVA, a.getEstado());
         assertEquals(0, a.getVisitantesAcumulados());
     }
+
+    @Test @Order(7)
+    @DisplayName("ParqueService: alerta climática cierra solo ACUATICA y MECANICA_ALTURA")
+    void testAlertaClimatica() {
+        // Usar una instancia limpia para el test
+        ParqueService srv = ParqueService.getInstance();
+
+        Atraccion acuatica = new Atraccion("C1", "Laguna", TipoAtraccion.ACUATICA, 20, 1.0, 5, 0, "Z1");
+        Atraccion mecanica = new Atraccion("C2", "Caída",  TipoAtraccion.MECANICA_ALTURA, 12, 1.4, 14, 0, "Z2");
+        Atraccion show     = new Atraccion("C3", "Show",   TipoAtraccion.SHOW, 200, 0, 0, 0, "Z4");
+
+        srv.agregarAtraccion(acuatica);
+        srv.agregarAtraccion(mecanica);
+        srv.agregarAtraccion(show);
+
+        List<String> cerradas = srv.activarAlertaClimatica("TORMENTA_ELECTRICA");
+
+        assertTrue(cerradas.contains("C1"));
+        assertTrue(cerradas.contains("C2"));
+        assertFalse(cerradas.contains("C3")); // show no se cierra por clima
+
+        assertEquals(EstadoAtraccion.CERRADA, srv.getAtraccion("C1").getEstado());
+        assertEquals(EstadoAtraccion.ACTIVA,  srv.getAtraccion("C3").getEstado());
+
+        srv.desactivarAlertaClimatica();
+        assertFalse(srv.isAlertaClimatica());
+    }
 }
