@@ -1,223 +1,197 @@
-# 🎢 Tech-Park UQ — Sistema de Gestión de Parque de Atracciones
+# Tech-Park UQ
 
-Sistema integral para la gestión operativa del parque de diversiones **Tech-Park UQ**.  
-Desarrollado con **Java + Javalin** (backend) y **React + Vite** (frontend).
+An end-to-end amusement park management system with a Java backend and a React frontend. The project combines business logic, custom data structures, file-based persistence, and a graphical interface focused on operations, administration, and route exploration.
 
----
+## Overview
 
-## 📁 Estructura del proyecto
+Tech-Park UQ is designed to simulate and manage the operations of a theme park. It supports attractions, zones, visitors, operators, virtual queues, internal routes, reports, and weather alerts. The application is started from a single script: `run.sh`.
 
+The backend exposes a REST API and centralizes the system logic. The frontend consumes that API and presents role-specific panels.
+
+## How to Run
+
+The recommended way to start the entire system is:
+
+```bash
+./run.sh
 ```
-tech-park/
+
+The script launches both the backend and the frontend in the same execution. Once the startup completes, the application is available at:
+
+- Frontend: `http://localhost:5173/login`
+- Backend: `http://localhost:8080`
+
+To stop both services, press `Ctrl+C` in the terminal where the script is running.
+
+## Project Architecture
+
+```text
+ProyectoFinalEstructurasDatos/
 ├── backend/
 │   ├── pom.xml
-│   └── src/
-│       ├── main/
-│       │   ├── java/com/techpark/
-│       │   │   ├── App.java                          ← Punto de entrada Javalin (puerto 8080)
-│       │   │   ├── model/
-│       │   │   │   ├── Atraccion.java
-│       │   │   │   ├── Zona.java
-│       │   │   │   ├── Visitante.java
-│       │   │   │   ├── Operador.java
-│       │   │   │   ├── Administrador.java
-│       │   │   │   ├── Ticket.java
-│       │   │   │   ├── TipoTicket.java               ← Enum: GENERAL | FAMILIAR | FAST_PASS
-│       │   │   │   ├── TipoAtraccion.java            ← Enum: ACUATICA | MECANICA_ALTURA | …
-│       │   │   │   └── EstadoAtraccion.java          ← Enum: ACTIVA | EN_MANTENIMIENTO | CERRADA
-│       │   │   ├── structures/                       ← IMPLEMENTACIONES PROPIAS (sin java.util)
-│       │   │   │   ├── ListaEnlazada.java            ← Historial de visitas, lista de operadores
-│       │   │   │   ├── SetPropio.java                ← Favoritos del visitante (tabla hash)
-│       │   │   │   ├── ColaPrioridad.java            ← Min-heap: FastPass(1) > General(2)
-│       │   │   │   ├── ABB.java                      ← Árbol BST para búsqueda de atracciones
-│       │   │   │   └── Grafo.java                    ← Lista adyacencia + BFS + Dijkstra
-│       │   │   ├── service/
-│       │   │   │   ├── ParqueService.java            ← Singleton: repositorio central + lógica
-│       │   │   │   ├── RutaService.java              ← Dijkstra / BFS / grafo para vista
-│       │   │   │   └── CargaDatosService.java        ← Carga desde archivo plano o escenario
-│       │   │   └── controller/
-│       │   │       ├── AtraccionController.java
-│       │   │       ├── ZonaController.java
-│       │   │       ├── VisitanteController.java
-│       │   │       ├── OperadorController.java
-│       │   │       ├── AdminController.java
-│       │   │       ├── ClimaController.java
-│       │   │       └── RutaController.java
-│       │   └── resources/
-│       │       └── datos_prueba.txt                  ← Escenario inicial en formato plano
-│       └── test/java/com/techpark/
-│           └── TechParkTest.java                     ← 8 pruebas unitarias (JUnit 5)
-│
+│   ├── data/
+│   │   ├── admins.json
+│   │   ├── atracciones.json
+│   │   ├── cierres_clima.json
+│   │   ├── operadores.json
+│   │   ├── visitantes.json
+│   │   └── zonas.json
+│   └── src/main/java/com/techpark/
+│       ├── App.java
+│       ├── controller/
+│       ├── model/
+│       ├── service/
+│       ├── structures/
+│       └── util/
 └── frontend/
     ├── package.json
-    ├── vite.config.js                                ← Proxy /api → localhost:8080
-    ├── index.html
+    ├── vite.config.js
     └── src/
-        ├── main.jsx
-        ├── App.jsx                                   ← Router + Sidebar
-        ├── styles/global.css
-        ├── services/
-        │   └── api.js                               ← Todas las llamadas HTTP al backend
         ├── components/
-        │   ├── AtraccionCard.jsx
-        │   ├── ZonaCard.jsx
-        │   ├── ColaComponent.jsx                    ← Cola en tiempo real + procesar siguiente
-        │   ├── RutaComponent.jsx                    ← Dijkstra interactivo
-        │   ├── TablaEstadisticas.jsx                ← Tabla genérica configurable
-        │   └── MapaInteractivo.jsx                  ← Cytoscape.js + resaltado de ruta
-        └── pages/
-            ├── Inicio.jsx                           ← Dashboard general del parque
-            ├── PanelVisitante.jsx                   ← Registro, cola, historial, favoritos
-            ├── PanelOperador.jsx                    ← Zonas, atracciones, colas, estado
-            ├── PanelAdmin.jsx                       ← CRUD zonas/atracciones, clima, datos
-            ├── PanelRutas.jsx                       ← Dijkstra + BFS + gestión del grafo
-            ├── Estadisticas.jsx                     ← Reportes y KPIs
-            └── MapaInteractivo.jsx                  ← Mapa visual del grafo con Cytoscape
+        ├── context/
+        ├── pages/
+        ├── services/
+        └── styles/
 ```
 
----
+## Backend
 
-## 🚀 Cómo levantar el proyecto
+The backend is built with **Java 17**, **Javalin**, and **Maven**. Its main responsibility is to expose the API, apply the business rules, and coordinate access to system data.
 
-### Backend
+### Main layers
 
-```bash
-cd backend
-mvn clean package -q
-java -jar target/tech-park-backend-1.0-SNAPSHOT.jar
-# ✅ Servidor en http://localhost:8080
-```
+- `controller`: receives HTTP requests and translates them into domain operations.
+- `service`: concentrates park logic, queue management, routes, data loading, and validation.
+- `model`: defines the domain entities such as visitors, attractions, operators, zones, and tickets.
+- `structures`: contains the manually implemented data structures used to solve project-specific needs.
+- `util`: groups support utilities, mainly for serialization and data handling.
 
-O en modo desarrollo:
-```bash
-mvn compile exec:java -Dexec.mainClass="com.techpark.App"
-```
+### Persistence and data handling
 
-### Frontend
+This project does not use an external relational database. Current persistence is handled through JSON files located in `backend/data/`.
 
-```bash
-cd frontend
-npm install
-npm run dev
-# ✅ App en http://localhost:5173
-```
+This approach makes it possible to:
 
----
+- store information locally in a simple way;
+- load initial data without depending on a database engine;
+- keep traceability for entities such as visitors, operators, zones, attractions, and weather closures;
+- make the system easy to run in academic or demo environments.
 
-## 🔌 Endpoints REST
+In addition, the backend includes both a test scenario loader and flat-file reading support for system initialization or base data restoration.
 
-| Método | Ruta | Descripción |
-|--------|------|-------------|
-| GET | `/ping` | Health check |
-| GET | `/atracciones` | Listar todas |
-| POST | `/atracciones` | Crear |
-| GET | `/atracciones/{id}` | Obtener por ID |
-| GET | `/atracciones/buscar/{nombre}` | Buscar por nombre (ABB) |
-| PUT | `/atracciones/{id}/estado` | Cambiar estado |
-| PUT | `/atracciones/{id}/revision` | Registrar revisión técnica |
-| DELETE | `/atracciones/{id}` | Eliminar |
-| GET | `/atracciones/{id}/cola/tamanio` | Tamaño de la cola |
-| GET | `/zonas` | Listar zonas |
-| POST | `/zonas` | Crear zona |
-| DELETE | `/zonas/{id}` | Eliminar zona |
-| GET | `/visitantes` | Listar visitantes |
-| POST | `/visitantes` | Registrar visitante |
-| DELETE | `/visitantes/{id}` | Retirar visitante |
-| POST | `/visitantes/{id}/cola/{atraccionId}` | Ingresar a cola |
-| GET | `/visitantes/{id}/historial` | Historial de visitas |
-| GET | `/visitantes/{id}/favoritos` | Favoritos |
-| POST | `/visitantes/{id}/favoritos/{atraccionId}` | Agregar favorito |
-| DELETE | `/visitantes/{id}/favoritos/{atraccionId}` | Quitar favorito |
-| POST | `/visitantes/{id}/saldo` | Recargar saldo |
-| GET | `/operadores` | Listar operadores |
-| POST | `/operadores` | Crear operador |
-| PUT | `/operadores/{id}/zona` | Asignar zona |
-| DELETE | `/operadores/{id}` | Eliminar |
-| POST | `/operadores/atracciones/{atraccionId}/procesar` | Procesar siguiente de la cola |
-| GET | `/clima` | Estado climático actual |
-| POST | `/clima/alerta` | Activar alerta (cierra ACUATICA + MECANICA_ALTURA) |
-| DELETE | `/clima/alerta` | Desactivar alerta |
-| GET | `/rutas/dijkstra?origen=A1&destino=A5` | Ruta óptima |
-| GET | `/rutas/bfs?origen=A1` | Recorrido BFS |
-| GET | `/rutas/grafo` | Grafo completo para la GUI |
-| POST | `/rutas/conexion` | Conectar dos atracciones |
-| GET | `/admin/reportes/top-atracciones?n=5` | Top atracciones |
-| GET | `/admin/reportes/mantenimiento` | Atracciones en mantenimiento |
-| GET | `/admin/reportes/cierres-clima` | Cierres por clima |
-| GET | `/admin/reportes/ingreso-diario` | Ingreso diario |
-| GET | `/admin/reportes/tiempo-espera-promedio` | Tiempo promedio espera |
-| GET | `/admin/reportes/aforo` | Aforo actual vs máximo |
-| POST | `/admin/datos/prueba` | Cargar escenario de prueba |
-| POST | `/admin/datos/archivo` | Cargar desde archivo plano |
+### Custom data structures
 
----
+A central part of the project is the manual implementation of data structures in `backend/src/main/java/com/techpark/structures/`. These structures do not rely on `java.util` as the primary solution for the system’s critical use cases.
 
-## 🧪 Pruebas unitarias
+- `ListaEnlazada`: visit history, operators by zone, and auxiliary lists.
+- `SetPropio`: visitor favorites, avoiding duplicates through a chained hash table.
+- `ColaPrioridad`: virtual queue management with priority by ticket type and FIFO order within each level.
+- `ABB`: efficient attraction search by name through a binary search tree.
+- `Grafo`: internal park connections for BFS and Dijkstra route calculation.
+
+### Key business rules
+
+- queue control and priority-based service;
+- operator assignment to zones;
+- attraction state changes;
+- preventive maintenance and weather closures;
+- optimal internal route calculation;
+- operational report generation.
+
+## Frontend
+
+The frontend is built with **React 18** and **Vite**. Its purpose is to provide a clear interface for each user type and consume the backend API in a decoupled way.
+
+### Graphical interface
+
+The application provides a visual experience divided by role:
+
+- visitor panel for registration, favorites, history, balance, and queues;
+- operator panel for attraction operations and state management;
+- administrator panel for general maintenance, reporting, and data loading;
+- routes module and interactive map for visualizing park connections.
+
+The interactive map uses **Cytoscape.js** to represent the park graph and highlight calculated routes.
+
+## Technologies Used
+
+- Java 17
+- Javalin 6
+- Maven
+- Gson
+- JUnit 5
+- React 18
+- Vite 5
+- React Router DOM 6
+- Cytoscape.js
+
+## Testing
+
+The backend test suite validates the behavior of the custom structures and several park business rules.
 
 ```bash
 cd backend
 mvn test
 ```
 
-La suite de `backend/src/test/java/com/techpark/TechParkTest.java` cubre 10 casos unitarios independientes:
-1. `ListaEnlazada` — agregar, buscar, eliminar y conservar orden.
-2. `SetPropio` — evitar duplicados y mantener consistencia.
-3. `ColaPrioridad` — FastPass antes que General y FIFO por nivel.
-4. `ABB` — insertar, buscar, recorrido inorden y eliminación.
-5. `Grafo` — BFS, Dijkstra y nodo aislado.
-6. `Atraccion` — mantenimiento preventivo automático al llegar a 500 visitantes.
-7. `Visitante` — historial de visitas y favoritos como estructuras separadas.
-8. `ParqueService` — compra de ticket general, bloqueo de duplicados y cancelación.
-9. `ParqueService` — compra de ticket familiar y cancelación del grupo completo.
-10. `ParqueService` — alerta climática con registro histórico y reapertura de atracciones.
+Detailed test documentation is available in [backend/TESTS.md](backend/TESTS.md).
 
-Guía detallada: [backend/TESTS.md](backend/TESTS.md)
+## Input Data Format
 
----
+The project supports flat-file data loading for system initialization.
 
-## 🗂️ Formato del archivo plano
-
-```
-# Comentario
-ZONA;id;nombre;capacidad
-ATRACCION;id;nombre;tipo;capacidadCiclo;alturaMin;edadMin;costoAdicional;zonaId
-CONEXION;idA;idB;peso
-OPERADOR;id;nombre;documento;zonaId
-VISITANTE;id;nombre;documento;edad;altura;saldo;tipoTicket;precioTicket
-ADMIN;id;nombre;documento;clave
+```text
+# Comment
+ZONE;id;name;capacity
+ATTRACTION;id;name;type;cycleCapacity;minHeight;minAge;extraCost;zoneId
+CONNECTION;idA;idB;weight
+OPERATOR;id;name;document;zoneId
+VISITOR;id;name;document;age;height;balance;ticketType;ticketPrice
+ADMIN;id;name;document;password
 ```
 
-Archivo de ejemplo: `backend/src/main/resources/datos_prueba.txt`
+Reference file: [backend/src/main/resources/datos_prueba.txt](backend/src/main/resources/datos_prueba.txt)
 
----
+## Implemented Structures
 
-## 📐 Estructuras de datos propias
+| Structure | Main use |
+|---|---|
+| `ListaEnlazada<T>` | Dynamic collections and visit history |
+| `SetPropio<T>` | Deduplicated favorites |
+| `ColaPrioridad<T>` | Priority-based virtual queue |
+| `ABB<K, V>` | Ordered attraction lookup |
+| `Grafo` | Internal navigation and route calculation |
 
-| Clase | Uso en el sistema |
-|-------|-------------------|
-| `ListaEnlazada<T>` | Historial de visitas · Lista de operadores por zona · Lista de IDs de atracciones por zona |
-| `SetPropio<T>` | Favoritos del visitante (tabla hash con encadenamiento) |
-| `ColaPrioridad<T>` | Fila virtual de atracciones (min-heap, FIFO por nivel) |
-| `ABB<K,V>` | Catálogo de atracciones indexado por nombre para búsqueda rápida |
-| `Grafo` | Mapa físico del parque (lista de adyacencia + BFS + Dijkstra) |
+## System Roles
 
----
+| Role | Capabilities |
+|---|---|
+| Visitor | Registration, virtual queue, history, favorites, optimal route, balance top-up |
+| Operator | Management of attractions in their zone, state control, technical review, and queue processing |
+| Administrator | CRUD for zones and attractions, operator management, weather alerts, reports, and data loading |
 
-## 👥 Roles del sistema
+## REST API
 
-| Rol | Acceso |
-|-----|--------|
-| **Visitante** | Registro, cola virtual, historial, favoritos, ruta óptima, recarga de saldo |
-| **Operador** | Gestión de atracciones de su zona, cambio de estado, revisión técnica, procesar cola |
-| **Administrador** | CRUD zonas/atracciones, gestión de operadores, alertas climáticas, reportes, carga de datos |
+The backend exposes endpoints for:
 
----
+- authentication and role-based access;
+- management of zones, attractions, visitors, and operators;
+- queue and ticket administration;
+- weather consultation and preventive closures;
+- route calculation with the internal graph;
+- operational reports and data loading.
 
-## ⚙️ Tecnologías
+## Frontend Structure
 
-- **Java 17** + **Javalin 6** + **Maven**
-- **Gson** para serialización JSON
-- **JUnit 5** para pruebas unitarias
-- **React 18** + **Vite 5**
-- **React Router DOM 6**
-- **Cytoscape.js** para el mapa interactivo del grafo
+Relevant components and pages:
+
+- `components/`: cards, queues, routes, tables, interactive map, and layouts;
+- `pages/`: home screen, login, role panels, statistics, and map views;
+- `services/api.js`: single HTTP consumption layer for the backend;
+- `context/AuthContext.jsx`: global authentication state.
+
+## Final Notes
+
+- The project is intended to run locally with a simple startup flow.
+- Persistence is file-based rather than database-driven.
+- The custom data structures are a core part of the academic and functional design of the system.

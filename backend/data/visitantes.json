@@ -132,7 +132,7 @@
     "altura": 1.65,
     "username": "usuario1",
     "passwordHash": "a0ccddd9e5ddd2617e88f6515a2998f0119b6e99fd2bfef049550ad983af9fa0",
-    "saldoVirtual": 112000.0,
+    "saldoVirtual": 204000.0,
     "ticketComprado": {
       "id": "T-usuario1",
       "tipo": "GENERAL",
@@ -162,15 +162,20 @@
         "siguiente": {
           "dato": "A6",
           "siguiente": {
-            "dato": "A3"
+            "dato": "A3",
+            "siguiente": {
+              "dato": "A3"
+            }
           }
         }
       },
-      "tamanio": 3
+      "tamanio": 4
     },
     "favoritos": {
       "tabla": [
-        null,
+        {
+          "dato": "A1"
+        },
         null,
         null,
         null,
@@ -187,7 +192,7 @@
         null,
         null
       ],
-      "tamanio": 0,
+      "tamanio": 1,
       "capacidad": 16
     }
   },
