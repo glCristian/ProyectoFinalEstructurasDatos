@@ -2,6 +2,8 @@
 
 An end-to-end amusement park management system with a Java backend and a React frontend. The project combines business logic, custom data structures, file-based persistence, and a graphical interface focused on operations, administration, and route exploration.
 
+Developed by Cristian Camilo Bonilla Pineda and Juan Jose Ospina Varon.
+
 ## Overview
 
 Tech-Park UQ is designed to simulate and manage the operations of a theme park. It supports attractions, zones, visitors, operators, virtual queues, internal routes, reports, and weather alerts. The application is started from a single script: `run.sh`.
